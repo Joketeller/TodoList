@@ -1,9 +1,12 @@
 package DataType;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class TableAttributes {
     String Name;
     int numberofdata;
-
+    List<ListDetail> Info=new ArrayList<ListDetail>();
     public String getName() {
         return Name;
     }
@@ -19,4 +22,5 @@ public class TableAttributes {
     public void setNumberofdata(int numberofdata) {
         this.numberofdata = numberofdata;
     }
+
 }

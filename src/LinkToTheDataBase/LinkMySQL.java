@@ -1,5 +1,5 @@
 package LinkToTheDataBase;
-
+//数据存储层
 //存在的问题有：表名相同时应报错，记得开发。
 import DataType.TableAttributes;
 import java.sql.Connection;
@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
 import java.util.List;
 
 public class LinkMySQL {
@@ -100,7 +101,7 @@ public class LinkMySQL {
     //    public List<>
     public List<TableAttributes> QueryTheTable(){
         //int result=0; //result==0 表示正常
-        List<TableAttributes> List=null;
+        List<TableAttributes> Lists=new ArrayList<TableAttributes>();
         try {
              System.out.println("尝试连接数据库...");
              Class.forName(JDBC_DRIVER);
@@ -115,10 +116,9 @@ public class LinkMySQL {
             ResultSet rs = stmt.executeQuery("show tables; ");
             while (rs.next()){
                 TableAttributes tmpdata=new TableAttributes();
-                tmpdata.setName(rs.getString("ename"));
-                List.add(tmpdata);
+                tmpdata.setName(rs.getString(1));
+                Lists.add(tmpdata);
             }
-
             rs.close();
         } catch (Exception e) {
             e.printStackTrace();
@@ -132,6 +132,7 @@ public class LinkMySQL {
                 e.printStackTrace();
             }
         }
+        return Lists;
     }
 }
 
