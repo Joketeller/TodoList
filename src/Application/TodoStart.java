@@ -1,3 +1,5 @@
+package Application;
+
 import DataType.TableAttributes;
 import LinkToTheDataBase.LinkMySQL;
 import javafx.application.Application;
@@ -6,16 +8,18 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
+import java.net.URL;
 import java.util.List;
 
-public class Main extends Application {
+public class TodoStart extends Application {
 
     @Override
     public void start(Stage primaryStage) throws Exception{
-        Parent root = FXMLLoader.load(getClass().getResource("main.fxml"));
+        Parent root = FXMLLoader.load(getClass().getResource("/fxml/main.fxml"));
         primaryStage.setTitle("TEST");
         primaryStage.setScene(new Scene(root));
         primaryStage.show();
+
     }
 
 
