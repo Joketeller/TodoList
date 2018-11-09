@@ -1,14 +1,13 @@
 package Application;
-
+import DataType.ListDetail;
 import DataType.TableAttributes;
-import LinkToTheDataBase.LinkMySQL;
+import LinkToDataBase.LinkMySQL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
 
-import java.net.URL;
 import java.util.List;
 
 public class TodoStart extends Application {
@@ -24,6 +23,8 @@ public class TodoStart extends Application {
 
 
     public static void main(String[] args) {
+        LinkMySQL Link=new LinkMySQL();
+      //  Link.DropTable("Fuck");
         launch(args);
     }
 }

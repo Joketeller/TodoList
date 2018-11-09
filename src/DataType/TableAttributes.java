@@ -6,7 +6,7 @@ import java.util.List;
 public class TableAttributes {
     String Name;
     int numberofdata;
-    List<ListDetail> Info=new ArrayList<ListDetail>();
+    List<ListDetail> Info;
     public String getName() {
         return Name;
     }
