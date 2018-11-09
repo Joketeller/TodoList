@@ -211,6 +211,28 @@ public class LinkMySQL {
         return result;
     }
 
+    //重命名表名,可用
+    public int RenameTable(String OldName,String NewName){
+        String sql="rename table "+OldName+" to "+NewName+";";
+        PreparedStatement pstmt=null;
+        int result=0;
+        try {
+            conn = getConn();
+            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+            result = pstmt.executeUpdate();
+        }catch (Exception e){
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
 }
 
 

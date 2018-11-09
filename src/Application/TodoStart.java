@@ -25,6 +25,7 @@ public class TodoStart extends Application {
     public static void main(String[] args) {
         LinkMySQL Link=new LinkMySQL();
       //  Link.DropTable("Fuck");
+        Link.RenameTable("Fuck","FFFF");
         launch(args);
     }
 }
