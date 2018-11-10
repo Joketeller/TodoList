@@ -192,18 +192,24 @@ public class LinkMySQL {
     }
 
     //插入List字段到表单中
-    //To be continued
+    //未测试是否可用
     public int InsertList(ListDetail Detail,String TableName){
         int result=0;
-        PreparedStatement pstmt;
-        String sql="INSERT";
+        PreparedStatement pstmt=null;
+        String sql="INSERT INTO "+TableName+"(Summary,Detail,Urgency) "
+                    +"Values ("+"'"+Detail.getSummary()+"','"+Detail.getDetail()+"',"+Detail.getUrgency()+");";
         try{
-
+            conn=getConn();
+            if (conn==null)
+                return -1;
+            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+            result = pstmt.executeUpdate();
         }catch (Exception e){
             e.printStackTrace();
         } finally {
             try {
                 conn.close();
+                pstmt.close();
             } catch (SQLException e) {
                 e.printStackTrace();
             }
