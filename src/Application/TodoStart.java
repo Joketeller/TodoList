@@ -24,8 +24,14 @@ public class TodoStart extends Application {
 
     public static void main(String[] args) {
         LinkMySQL Link=new LinkMySQL();
-      //  Link.DropTable("Fuck");
-        Link.RenameTable("Fuck","FFFF");
+        //Link.CreateTable("Fuck");
+//        ListDetail tmp=new ListDetail();
+//        tmp.setDetail("FUK");
+//        tmp.setSummary("Fck");
+//        tmp.setUrgency(10);
+//        tmp.setId(1);
+//        Link.DeleteListInfo(tmp,"Fuck");
+     //   Link.RenameTable("Fuck","FFFF");
         launch(args);
     }
 }

@@ -22,10 +22,7 @@ public class LinkMySQL {
     //mysql地址
     //指定连接数据库的url
     final static String DataBaseURL = "jdbc:mysql://106.15.191.0:3306/TodoListdatabase";
-    //注意判断是否用相同表名，记得添加功能和alert窗口
-    //Attention
-    //Attention
-    //Attention
+
 
     //获取connection，注意关闭
     private static Connection getConn(){
@@ -112,6 +109,7 @@ public class LinkMySQL {
                 return null;
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("show tables");
+            System.out.println("表单名获取成功！");
             while (rs.next()){
                 TableAttributes tmpdata=new TableAttributes();
                 tmpdata.setName(rs.getString(1));
@@ -119,6 +117,7 @@ public class LinkMySQL {
             }
             rs.close();
         } catch (Exception e) {
+            System.out.println("表单名获取失败！");
             e.printStackTrace();
         } finally {
             try {
@@ -144,11 +143,13 @@ public class LinkMySQL {
             PreparedStatement pstmt;
             pstmt = (PreparedStatement)conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
+            System.out.println("数据获取成功！");
             while (rs.next()){
                 ListDetail tmp=new ListDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"));
                 Lists.add(tmp);
             }
         } catch (Exception e) {
+            System.out.println("数据获取失败！");
             e.printStackTrace();
             return null;
         } finally {
@@ -174,8 +175,10 @@ public class LinkMySQL {
             String sql="DROP TABLE "+TableName;
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
+            System.out.println("删除表单成功！");
         }
         catch (Exception e){
+            System.out.println("删除表单失败！");
             e.printStackTrace();;
         }
         finally {
@@ -191,8 +194,8 @@ public class LinkMySQL {
         return result;
     }
 
-    //插入List字段到表单中
-    //未测试是否可用
+    //插入List数据到表单中
+    //可用,可能存在未知闪退bug
     public int InsertList(ListDetail Detail,String TableName){
         int result=0;
         PreparedStatement pstmt=null;
@@ -204,7 +207,9 @@ public class LinkMySQL {
                 return -1;
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
+            System.out.println("插入成功！");
         }catch (Exception e){
+            System.out.println("插入失败！");
             e.printStackTrace();
         } finally {
             try {
@@ -226,7 +231,61 @@ public class LinkMySQL {
             conn = getConn();
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
+            System.out.println("重命名成功！");
         }catch (Exception e){
+            System.out.println("重命名失败！");
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    //更新数据，可用
+    public int UpdateListInfo(ListDetail Detail, String TableName){
+        String sql="UPDATE "+TableName
+                    +" SET Summary = '"+Detail.getSummary()+"', "
+                    +"Detail = '"+Detail.getDetail()+"',"
+                    +"Urgency = "+Detail.getUrgency()+" "
+                    +"WHERE id = "+Detail.getId()+" ;";
+        PreparedStatement pstmt=null;
+        int result=0;
+        try {
+            conn = getConn();
+            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+            result = pstmt.executeUpdate();
+            System.out.println("更新成功！");
+        }catch (Exception e){
+            System.out.println("更新失败！");
+            e.printStackTrace();
+        }finally {
+            try {
+                conn.close();
+                pstmt.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        }
+        return result;
+    }
+
+    //删除表数据，可用
+    public int DeleteListInfo(ListDetail Detail,String TableName){
+        String sql="DELETE FROM "+TableName+" WHERE id = "+Detail.getId()+";";
+        PreparedStatement pstmt=null;
+        int result=0;
+        try {
+            conn = getConn();
+            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+            result = pstmt.executeUpdate();
+            System.out.println("删除成功！");
+        }catch (Exception e){
+            System.out.println("删除失败！");
             e.printStackTrace();
         }finally {
             try {
