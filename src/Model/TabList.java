@@ -1,10 +1,6 @@
 package Model;
 
-import javafx.beans.property.StringProperty;
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.SimpleIntegerProperty;
-import javafx.beans.property.SimpleObjectProperty;
-import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
 
 import java.time.LocalTime;
@@ -18,9 +14,9 @@ public class TabList {
         this(null,null,null);
     }
 
-    public TabList(StringProperty rootListName, StringProperty name, ObjectProperty<LocalTime> lastModifiedTime) {
-        RootListName = rootListName;
-        Name = name;
+    public TabList(String rootListName, String name, ObjectProperty<LocalTime> lastModifiedTime) {
+        this.RootListName = new SimpleStringProperty(rootListName);
+        this.Name = new SimpleStringProperty(name);
         LastModifiedTime = lastModifiedTime;
     }
 
