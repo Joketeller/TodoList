@@ -2,17 +2,16 @@ package Application;
 import java.io.IOException;
 import java.util.List;
 
-import DataType.TableAttributes;
-import LinkToDataBase.LinkMySQL;
-import Model.CategoryName;
-import Model.TabList;
+import DataType.CategoryInfo;
+import Database.MySQLIO;
+import Model.CategoryListNode;
+import Model.EventListNode;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Stage;
 
@@ -21,20 +20,23 @@ import javafx.stage.Stage;
 public class Mainapp extends Application {
     private Stage primaryStage;
     private BorderPane rootLayout;
-    private ObservableList<TabList> ListData = FXCollections.observableArrayList();
-    private ObservableList<CategoryName> Categories = FXCollections.observableArrayList();;
+    private ObservableList<EventListNode> Events = FXCollections.observableArrayList();
+    private ObservableList<CategoryListNode> Categories = FXCollections.observableArrayList();
+    private List<CategoryInfo> table=null;
+    public ObservableList<EventListNode> getEvents(String CategoryName) {
+        Events.clear();
 
-    public ObservableList<TabList> getListData() {
-        return ListData;
+        return Events;
     }
-    LinkMySQL Link=new LinkMySQL();
+    MySQLIO Link=new MySQLIO();
 
     @Override
     public void start(Stage primaryStage) {
         this.primaryStage = primaryStage;
-        this.primaryStage.setTitle("TodoList");
+        this.primaryStage.setTitle("ToDoList");
         initRootLayout();
         Backgroundshow();
+        // System.out.println("ok!");
     }
 
 
@@ -53,31 +55,35 @@ public class Mainapp extends Application {
         }
     }
 
-    //
+
     public void Backgroundshow() {
         try {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Mainapp.class.getResource("/View/background.fxml"));
             Parent Background =  loader.load();
             rootLayout.setCenter(Background);
-         //   OverAllController controller=loader.getController();
-            //controller.Setmainapp(this);
+            OverAllController controller=loader.getController();
+            controller.Setmainapp(this);
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 
+
     public void setCategory(){
-        List<TableAttributes> table=Link.QueryTheTableName();
-        for (TableAttributes tmp:table){
-            Categories.add(new CategoryName(tmp.getName()));
+        table=Link.QueryTheTableName();
+        for (CategoryInfo tmp:table){
+            tmp.setInfo(Link.QueryListInfo(tmp.getName()));
+            Categories.add(new CategoryListNode(tmp.getName()));
         }
     }
 
+
     //to be continued
-    public ObservableList<CategoryName> getCategory(){
+    public ObservableList<CategoryListNode> getCategory(){
         setCategory();
         return Categories;
     }
+
 
 }

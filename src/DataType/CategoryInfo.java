@@ -1,12 +1,22 @@
 package DataType;
 
-import java.util.ArrayList;
 import java.util.List;
 
-public class TableAttributes {
+public class CategoryInfo {
     String Name;
-    int numberofdata;
-    List<ListDetail> Info;
+
+    public List<EventDetail> getInfo() {
+        return Info;
+    }
+
+    public void setInfo(List<EventDetail> info) {
+        Info = info;
+    }
+
+    private int numberofdata=0;
+
+    List<EventDetail> Info=null;
+
     public String getName() {
         return Name;
     }
@@ -22,5 +32,11 @@ public class TableAttributes {
     public void setNumberofdata(int numberofdata) {
         this.numberofdata = numberofdata;
     }
+
+    public void increasenum(){
+        numberofdata++;
+    }
+
+    public void decreasenum() {numberofdata--;}
 
 }

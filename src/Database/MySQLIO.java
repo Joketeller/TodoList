@@ -1,14 +1,15 @@
-package LinkToDataBase;
+package Database;
 //数据存储层
-//存在的问题有：表名相同时应报错，记得开发。
-import DataType.ListDetail;
-import DataType.TableAttributes;
+//表名不能相同
+//
+import DataType.EventDetail;
+import DataType.CategoryInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class LinkMySQL {
+public class MySQLIO {
     //数据库连接
     Connection conn = null;
     //数据库操作语句
@@ -23,16 +24,15 @@ public class LinkMySQL {
     //指定连接数据库的url
     final static String DataBaseURL = "jdbc:mysql://106.15.191.0:3306/TodoListdatabase";
 
-
     //获取connection，注意关闭
     private static Connection getConn(){
         Connection con=null;
         try {
             Class.forName(JDBC_DRIVER);
-            System.out.println("尝试连接数据库...");
+         //   System.out.println("尝试连接数据库...");
             con = DriverManager.getConnection(DataBaseURL,name,pwd);
             if (!con.isClosed()){
-                System.out.println("连接数据库成功！");
+              //  System.out.println("连接数据库成功！");
             }
             else {
                 //result=-1; //-1表示连接服务器失败，请确保您的网络环境
@@ -69,13 +69,16 @@ public class LinkMySQL {
                                 + "id int(10) AUTO_INCREMENT PRIMARY KEY NOT NULL,"
                                 + "Urgency int(10) NOT NULL,"
                                 + "Summary TINYTEXT NOT NULL,"
-                                + "Detail TEXT NOT NULL"
+                                + "Detail TEXT NOT NULL,"
+                                + "BeginTime TEXT NOT NULL,"
+                                + "EndTime TEXT NOT NULL,"
+                                + "Status TINYINT NOT NULL"
                                 + ")charset=utf8;";
-            System.out.println("正在创建表...");
+         //   System.out.println("正在创建表...");
             stmt = conn.createStatement();
             if(stmt.executeLargeUpdate(creatsql) == 0)
             {
-                System.out.println("成功创建表！");
+     //           System.out.println("成功创建表！");
             }
             else
             {
@@ -101,17 +104,18 @@ public class LinkMySQL {
     }
 
     //获取所有表单名
-    public List<TableAttributes> QueryTheTableName(){  //若返回值为null则数据库链接失败
-        List<TableAttributes> Lists=new ArrayList<TableAttributes>();
+    //不需要修改
+    public List<CategoryInfo> QueryTheTableName(){  //若返回值为null则数据库链接失败
+        List<CategoryInfo> Lists=new ArrayList<CategoryInfo>();
         try {
             conn=getConn();
             if (conn==null)
                 return null;
             stmt = conn.createStatement();
             ResultSet rs = stmt.executeQuery("show tables");
-            System.out.println("表单名获取成功！");
+          //  System.out.println("表单名获取成功！");
             while (rs.next()){
-                TableAttributes tmpdata=new TableAttributes();
+                CategoryInfo tmpdata=new CategoryInfo();
                 tmpdata.setName(rs.getString(1));
                 Lists.add(tmpdata);
             }
@@ -134,18 +138,23 @@ public class LinkMySQL {
         return Lists;
     }
 
+    //!!!
+    //!!!
+    //!!!
+    //!!!
+    //!!!
     //获取详细List数据
-    public List<ListDetail> QueryListInfo(String TableName){   //返回值为null说明出错
-        List<ListDetail> Lists=new ArrayList<ListDetail>();
+    public List<EventDetail> QueryListInfo(String TableName){   //返回值为null说明出错
+        List<EventDetail> Lists=new ArrayList<EventDetail>();
         try {
             conn=getConn();
             String sql = "select * from "+TableName;
             PreparedStatement pstmt;
             pstmt = (PreparedStatement)conn.prepareStatement(sql);
             ResultSet rs = pstmt.executeQuery();
-            System.out.println("数据获取成功！");
+      //      System.out.println("数据获取成功！");
             while (rs.next()){
-                ListDetail tmp=new ListDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"));
+                EventDetail tmp=new EventDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"),rs.getBoolean("Status"),rs.getString("BeginTime"),rs.getString("EndTime"));
                 Lists.add(tmp);
             }
         } catch (Exception e) {
@@ -165,6 +174,7 @@ public class LinkMySQL {
     }
 
     //删除表单
+    //不需要更新
     public int DropTable(String TableName){
         PreparedStatement pstmt = null;
         int result=0;
@@ -175,7 +185,7 @@ public class LinkMySQL {
             String sql="DROP TABLE "+TableName;
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
-            System.out.println("删除表单成功！");
+          //  System.out.println("删除表单成功！");
         }
         catch (Exception e){
             System.out.println("删除表单失败！");
@@ -195,19 +205,18 @@ public class LinkMySQL {
     }
 
     //插入List数据到表单中
-    //可用,可能存在未知闪退bug
-    public int InsertList(ListDetail Detail,String TableName){
+    public int InsertList(EventDetail Detail, String TableName){
         int result=0;
         PreparedStatement pstmt=null;
-        String sql="INSERT INTO "+TableName+"(Summary,Detail,Urgency) "
-                    +"Values ("+"'"+Detail.getSummary()+"','"+Detail.getDetail()+"',"+Detail.getUrgency()+");";
+        String sql="INSERT INTO "+TableName+"(Summary,Detail,Urgency,Status,BeginTime,EndTime) "
+                    +"Values ("+"'"+Detail.getSummary()+"','"+Detail.getDetail()+"',"+Detail.getUrgency()+","+Detail.isStatus()+",'"+Detail.getBegintime()+"','"+Detail.getEndtime()+"');";
         try{
             conn=getConn();
             if (conn==null)
                 return -1;
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
-            System.out.println("插入成功！");
+  //          System.out.println("插入成功！");
         }catch (Exception e){
             System.out.println("插入失败！");
             e.printStackTrace();
@@ -223,6 +232,7 @@ public class LinkMySQL {
     }
 
     //重命名表名,可用
+    //不需要更新
     public int RenameTable(String OldName,String NewName){
         String sql="rename table "+OldName+" to "+NewName+";";
         PreparedStatement pstmt=null;
@@ -231,7 +241,7 @@ public class LinkMySQL {
             conn = getConn();
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
-            System.out.println("重命名成功！");
+   //         System.out.println("重命名成功！");
         }catch (Exception e){
             System.out.println("重命名失败！");
             e.printStackTrace();
@@ -247,10 +257,13 @@ public class LinkMySQL {
     }
 
     //更新数据，可用
-    public int UpdateListInfo(ListDetail Detail, String TableName){
+    public int UpdateListInfo(EventDetail Detail, String TableName){
         String sql="UPDATE "+TableName
                     +" SET Summary = '"+Detail.getSummary()+"', "
                     +"Detail = '"+Detail.getDetail()+"',"
+                    +"Status = "+Detail.isStatus()+" , "
+                    +"BeginTime = '"+Detail.getBegintime()+"',"
+                    +"EndTime = '"+Detail.getEndtime()+","
                     +"Urgency = "+Detail.getUrgency()+" "
                     +"WHERE id = "+Detail.getId()+" ;";
         PreparedStatement pstmt=null;
@@ -259,7 +272,7 @@ public class LinkMySQL {
             conn = getConn();
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
-            System.out.println("更新成功！");
+   //         System.out.println("更新成功！");
         }catch (Exception e){
             System.out.println("更新失败！");
             e.printStackTrace();
@@ -275,7 +288,8 @@ public class LinkMySQL {
     }
 
     //删除表数据，可用
-    public int DeleteListInfo(ListDetail Detail,String TableName){
+    //不需要后续更新
+    public int DeleteListInfo(EventDetail Detail, String TableName){
         String sql="DELETE FROM "+TableName+" WHERE id = "+Detail.getId()+";";
         PreparedStatement pstmt=null;
         int result=0;
@@ -283,7 +297,7 @@ public class LinkMySQL {
             conn = getConn();
             pstmt = (PreparedStatement) conn.prepareStatement(sql);
             result = pstmt.executeUpdate();
-            System.out.println("删除成功！");
+  //          System.out.println("删除成功！");
         }catch (Exception e){
             System.out.println("删除失败！");
             e.printStackTrace();
