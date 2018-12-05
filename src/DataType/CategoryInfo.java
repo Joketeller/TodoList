@@ -5,6 +5,11 @@ import java.util.List;
 public class CategoryInfo {
     String Name;
 
+    private int TotalEventNum=0;
+    private int UnfinishedEventNum=0;
+
+    List<EventDetail> Info=null;
+
     public List<EventDetail> getInfo() {
         return Info;
     }
@@ -13,9 +18,7 @@ public class CategoryInfo {
         Info = info;
     }
 
-    private int numberofdata=0;
 
-    List<EventDetail> Info=null;
 
     public String getName() {
         return Name;
@@ -25,18 +28,40 @@ public class CategoryInfo {
         Name = name;
     }
 
-    public int getNumberofdata() {
-        return numberofdata;
+    public int getUnfinishedEventNum() {
+        return UnfinishedEventNum;
     }
 
-    public void setNumberofdata(int numberofdata) {
-        this.numberofdata = numberofdata;
+    public void setUnfinishedEventNum(int unfinishedEventNum) {
+        UnfinishedEventNum = unfinishedEventNum;
+    }
+
+    public int getTotalEventNum() {
+        return TotalEventNum;
+    }
+
+    public void setTotalEventNum(int totalEventNum) {
+        TotalEventNum = totalEventNum;
     }
 
     public void increasenum(){
-        numberofdata++;
+        TotalEventNum++;
     }
 
-    public void decreasenum() {numberofdata--;}
+    public void decreasenum() {TotalEventNum--;}
+
+    public void calculatenum(){
+        TotalEventNum=0;
+        UnfinishedEventNum=0;
+        for (EventDetail now:Info)
+        {
+            TotalEventNum++;
+            if (!now.isStatus())
+                UnfinishedEventNum++;
+        }
+//        System.out.println(TotalEventNum);
+//        System.out.println(UnfinishedEventNum);
+    }
+
 
 }

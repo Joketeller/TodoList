@@ -11,7 +11,7 @@ public class EventDetail {
     private int urgency=0;
     String begintime;
     String endtime;
-
+    String RootList;
     //数据库内存为tinyint
     boolean status =false;
     public EventDetail(int id, String detail, String summary, int urgency,boolean status,String begintime,String endtime) {
@@ -22,7 +22,6 @@ public class EventDetail {
         this.status = status;
         this.begintime=begintime;
         this.endtime=endtime;
-
     }
 
     public EventDetail() {
@@ -84,6 +83,14 @@ public class EventDetail {
 
     public void setEndtime(String endtime) {
         this.endtime = endtime;
+    }
+
+    public String getRootList() {
+        return RootList;
+    }
+
+    public void setRootList(String rootList) {
+        RootList = rootList;
     }
 }
 

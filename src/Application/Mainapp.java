@@ -3,6 +3,7 @@ import java.io.IOException;
 import java.util.List;
 
 import DataType.CategoryInfo;
+import DataType.EventDetail;
 import Database.MySQLIO;
 import Model.CategoryListNode;
 import Model.EventListNode;
@@ -23,12 +24,9 @@ public class Mainapp extends Application {
     private ObservableList<EventListNode> Events = FXCollections.observableArrayList();
     private ObservableList<CategoryListNode> Categories = FXCollections.observableArrayList();
     private List<CategoryInfo> table=null;
-    public ObservableList<EventListNode> getEvents(String CategoryName) {
-        Events.clear();
-
-        return Events;
-    }
     MySQLIO Link=new MySQLIO();
+
+
 
     @Override
     public void start(Stage primaryStage) {
@@ -74,15 +72,38 @@ public class Mainapp extends Application {
         table=Link.QueryTheTableName();
         for (CategoryInfo tmp:table){
             tmp.setInfo(Link.QueryListInfo(tmp.getName()));
-            Categories.add(new CategoryListNode(tmp.getName()));
+            tmp.calculatenum();
+            //System.out.println(tmp.getTotalEventNum());
+            Categories.add(new CategoryListNode(tmp.getName(),tmp.getTotalEventNum(),tmp.getUnfinishedEventNum()));
         }
     }
+
 
 
     //to be continued
     public ObservableList<CategoryListNode> getCategory(){
         setCategory();
         return Categories;
+    }
+
+    //to be continued
+    public ObservableList<EventListNode> getEvents(String CategoryName) {
+        setEvents(CategoryName);
+        return Events;
+    }
+
+    public void setEvents(String Cate){
+        Events.clear();
+        for (CategoryInfo now:table){
+            if (Cate.equals(now.getName()))
+            {
+                for (EventDetail tmp:now.getInfo())
+                {
+                    Events.add(new EventListNode(tmp));
+                }
+                return;
+            }
+        }
     }
 
 

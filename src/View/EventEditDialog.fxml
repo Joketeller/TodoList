@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.MenuButton?>
+<?import javafx.scene.control.MenuItem?>
+<?import javafx.scene.control.TextArea?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane prefHeight="536.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.EventEditDialogController">
+   <children>
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="14.0" prefHeight="36.0" prefWidth="110.0" text="编辑事件信息" textAlignment="RIGHT">
+         <font>
+            <Font name="Arial" size="17.0" />
+         </font>
+      </Label>
+      <GridPane layoutX="133.0" layoutY="50.0" prefHeight="391.0" prefWidth="378.0">
+        <columnConstraints>
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="209.0" minWidth="10.0" prefWidth="94.0" />
+          <ColumnConstraints hgrow="SOMETIMES" maxWidth="375.0" minWidth="10.0" prefWidth="284.0" />
+        </columnConstraints>
+        <rowConstraints>
+          <RowConstraints maxHeight="127.0" minHeight="0.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="312.0" minHeight="2.0" prefHeight="32.0" vgrow="SOMETIMES" />
+          <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="36.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="33.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="41.0" vgrow="SOMETIMES" />
+            <RowConstraints maxHeight="336.0" minHeight="10.0" prefHeight="216.0" vgrow="SOMETIMES" />
+        </rowConstraints>
+         <children>
+            <Label alignment="CENTER" text="事项名：" textAlignment="CENTER">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <TextField GridPane.columnIndex="1" />
+            <Label alignment="CENTER" text="紧急程度：" textAlignment="CENTER" GridPane.rowIndex="1">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <MenuButton mnemonicParsing="false" text="请选择紧急程度" GridPane.columnIndex="1" GridPane.rowIndex="1">
+               <items>
+                <MenuItem mnemonicParsing="false" />
+                <MenuItem mnemonicParsing="false" text="Action 1" />
+                <MenuItem mnemonicParsing="false" text="Action 2" />
+               </items>
+            </MenuButton>
+            <Label text="开始时间：" GridPane.rowIndex="2">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <TextField prefHeight="22.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <Label text="结束时间：" GridPane.rowIndex="3">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <Label text="完成情况：" GridPane.rowIndex="4">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <MenuButton mnemonicParsing="false" text="是否完成" GridPane.columnIndex="1" GridPane.rowIndex="4">
+              <items>
+                <MenuItem mnemonicParsing="false" text="已完成" />
+                <MenuItem mnemonicParsing="false" text="未完成" />
+              </items>
+            </MenuButton>
+            <Label alignment="CENTER" text="详细信息：" textAlignment="CENTER" GridPane.rowIndex="5">
+               <font>
+                  <Font name="Arial" size="14.0" />
+               </font>
+            </Label>
+            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+         </children>
+      </GridPane>
+      <Button layoutX="188.0" layoutY="472.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="407.0" layoutY="472.0" mnemonicParsing="false" text="Button" />
+   </children>
+</AnchorPane>

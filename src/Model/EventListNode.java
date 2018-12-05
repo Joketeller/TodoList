@@ -1,5 +1,6 @@
 package Model;
 
+import DataType.EventDetail;
 import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
 
@@ -7,25 +8,13 @@ import java.time.LocalTime;
 
 //列表视图属于显示的视图，会和View绑定
 public class EventListNode {
-    private final StringProperty RootListName;
-    private final StringProperty Name;
-    private final StringProperty BeginTime;
-    private final StringProperty EndTime;
-    private final BooleanProperty Status;
-    private final IntegerProperty Urgency;
-    public EventListNode() {
-        this(null,null,null,null,null,0);
-    }
-
-    public EventListNode(String rootListName, String name, String BeginTime,String EndTime,Boolean status,int urgency) {
-        this.RootListName = new SimpleStringProperty(rootListName);
-        this.Name = new SimpleStringProperty(name);
-        this.BeginTime=new SimpleStringProperty(BeginTime);
-        this.EndTime=new SimpleStringProperty(EndTime);
-        this.Status=new SimpleBooleanProperty(status);
-        this.Urgency=new SimpleIntegerProperty(urgency);
-    }
-
+    private final StringProperty RootListName=new SimpleStringProperty();
+    private final StringProperty Name=new SimpleStringProperty();
+    private final StringProperty BeginTime=new SimpleStringProperty();
+    private final StringProperty EndTime=new SimpleStringProperty();
+    private final BooleanProperty Status=new SimpleBooleanProperty();
+    private final IntegerProperty Urgency=new SimpleIntegerProperty();
+    private final StringProperty Detail=new SimpleStringProperty();
     public String getEndTime() {
         return EndTime.get();
     }
@@ -96,5 +85,27 @@ public class EventListNode {
 
     public void setUrgency(int urgency) {
         this.Urgency.set(urgency);
+    }
+
+    public EventListNode(EventDetail now){
+        this.Status.set(now.isStatus());
+        this.Urgency.set(now.getUrgency());
+        this.EndTime.set(now.getEndtime());
+        this.BeginTime.set(now.getBegintime());
+        this.Name.set(now.getSummary());
+        this.RootListName.set(now.getRootList());
+        this.Detail.set(now.getDetail());
+    }
+
+    public String getDetail() {
+        return Detail.get();
+    }
+
+    public StringProperty detailProperty() {
+        return Detail;
+    }
+
+    public void setDetail(String detail) {
+        this.Detail.set(detail);
     }
 }

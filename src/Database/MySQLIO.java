@@ -155,6 +155,7 @@ public class MySQLIO {
       //      System.out.println("数据获取成功！");
             while (rs.next()){
                 EventDetail tmp=new EventDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"),rs.getBoolean("Status"),rs.getString("BeginTime"),rs.getString("EndTime"));
+                tmp.setRootList(TableName);
                 Lists.add(tmp);
             }
         } catch (Exception e) {

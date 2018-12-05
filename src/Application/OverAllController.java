@@ -4,12 +4,10 @@ import DataType.CategoryInfo;
 import DataType.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.ListCell;
-import javafx.scene.control.ListView;
-import javafx.scene.control.SplitPane;
-import javafx.scene.control.TextArea;
+import javafx.scene.control.*;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -38,6 +36,24 @@ public class OverAllController implements Initializable {
         CategoryList.setPrefWidth(50);
         CategoryList.setCellFactory((ListView<CategoryListNode> data)-> new TitleCell());
         EventList.setCellFactory((ListView<EventListNode> data)-> new EventCell());
+        CategoryList.getFocusModel().focusedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+                    if (newValue!=null) {
+                        System.out.println("selecting " + newValue);
+                        ShowEventList(newValue);
+                    }
+                })
+        );
+        EventList.getFocusModel().focusedItemProperty().addListener(
+                ((observable, oldValue, newValue) -> {
+                    if (newValue != null) {
+                        System.out.println("selecting " + newValue);
+                        EventDetail.setText(newValue.getDetail());
+                    }
+                })
+           );
+
+
     }
 
     //分类列表视图
@@ -50,6 +66,7 @@ public class OverAllController implements Initializable {
                 Text title = new Text(item.getCategoryName());
                 title.setFont(Font.font("STKaiTi",16));
                 cell.setTop(title);
+//                System.out.println(item.getTotalEventNum());
                 Text numinfo = new Text(item.getTotalEventNum() + " 个任务");  //attention
                 numinfo.setFill(Color.BLUE);
                 numinfo.setFont(Font.font("STKaiTi",10));
@@ -76,7 +93,6 @@ public class OverAllController implements Initializable {
                 BorderPane cell=new BorderPane();
                 Text title= new Text(item.getName());
                 title.setFont(Font.font("STKaiTi",14));
-                cell.setTop(title);
                 Text Status=null;
                 Text BeginTime=new Text("开始时间："+item.getBeginTime());
                 Text EndTime=new Text("结束时间："+item.getEndTime());
@@ -84,30 +100,31 @@ public class OverAllController implements Initializable {
                 EndTime.setFont(Font.font("STKaiTi",10));
                 BeginTime.setFill(Color.BLUE);
                 EndTime.setFill(Color.BLUE);
-                Status.setFont(Font.font("STKaiTi",10));
-                Circle Cir=new Circle(10);
+                Circle Cir=new Circle(5);
                 if (item.getUrgency()==3)
                 {
-                    Cir.setFill(Color.RED);
+                    Cir.setFill(Color.PURPLE);
                 }
                 else {
                     if (item.getUrgency() == 2) {
                         Cir.setFill(Color.CORAL);
                     } else if (item.getUrgency() == 1) {
-                        Cir.setFill(Color.LIGHTGOLDENRODYELLOW);
+                        Cir.setFill(Color.LIGHTCORAL);
                     } else if (item.getUrgency() == 0) {
-                        Cir.setFill(Color.LIGHTGREY);
+                        Cir.setFill(Color.GREY);
                     }
                 }
                 if (item.isStatus()){
                     Status=new Text("完成情况：已完成");
                     Cir.setFill(Color.LIGHTGREY);
-                    Status.setFill(Color.LIGHTGREY);
+                    Status.setFill(Color.GREY);
                 }
                 else {
                     Status=new Text("完成情况：未完成");
-                    Status.setFill(Color.LIGHTGOLDENRODYELLOW);
+                    Status.setFill(Color.RED);
                 }
+                Status.setFont(Font.font("STKaiTi",10));
+                cell.setTop(title);
                 cell.setBottom(Status);
                 cell.setLeft(Cir);
                 cell.setCenter(BeginTime);
@@ -123,11 +140,10 @@ public class OverAllController implements Initializable {
     }
 
     //显示事项列表
-    //未完成
-    private void ShowEventList(CategoryInfo Cate)
+    private void ShowEventList(CategoryListNode Cate)
     {
         EventList.setItems(null);
-        EventList.setItems(mainapp.getEvents(Cate.getName()));
+        EventList.setItems(mainapp.getEvents(Cate.getCategoryName()));
     }
 
 
