@@ -166,6 +166,11 @@ public class OverAllController implements Initializable {
         this.mainapp=mainapp;
         CategoryList.setItems(mainapp.getCategory());
     }
+    @FXML
+    private void show()
+    {
+        mainapp.addCategory();
+    }
 
 
 }
