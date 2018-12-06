@@ -108,6 +108,14 @@ public class Mainapp extends Application {
             }
         }
     }
+    public void newCategory(String cateName)
+    {
+        // Scanner scan = new Scanner(System.in);
+        //  scan.close();
+        table.add(new CategoryInfo(cateName));
+        Categories.add(new CategoryListNode(cateName,0,0));
+    }
+
     @FXML
 
     public void addCategory()
