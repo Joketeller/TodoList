@@ -11,6 +11,7 @@ import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
@@ -108,6 +109,50 @@ public class Mainapp extends Application {
                 return;
             }
         }
+    }
+    public void newCategory(String cateName)
+    {
+        // Scanner scan = new Scanner(System.in);
+        //  scan.close();
+        table.add(new CategoryInfo(cateName));
+        Categories.add(new CategoryListNode(cateName,0,0));
+    }
+
+    @FXML
+
+    public void addCategory()
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader();
+            //Parent parent = FXMLLoader.load(getClass().getResource("MainLayout.fxml"));
+
+            // loader.setLocation();
+            loader.setLocation(Mainapp.class.getResource("/View/CategoryAddDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            // Create the dialog Stage.
+            //  Scene scene = new Scene(parent,300,200);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("添加新的事件分类");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            CategoryAddDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            //controller.setCategory(newCate);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+            //    return controller.isOkClicked();
+            // return true;
+        }catch (IOException e) {
+            e.printStackTrace();
+            //    return false;
+        }
+
     }
 
     public void DeleteEvent(String Name,String RootName,boolean finsished) {
