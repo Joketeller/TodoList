@@ -63,5 +63,15 @@ public class CategoryInfo {
 //        System.out.println(UnfinishedEventNum);
     }
 
-
+    public void DeleteEvent(String Name){
+        for (int i=Info.size()-1;i>=0;i--)
+        {
+            EventDetail now=Info.get(i);
+            if (now.getSummary().equals(Name)){
+                Info.remove(now);
+                break;
+            }
+        }
+        calculatenum();
+    }
 }

@@ -5,9 +5,12 @@ import DataType.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
 import javafx.beans.value.ObservableValue;
+import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.input.MouseButton;
+import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
@@ -26,9 +29,15 @@ public class OverAllController implements Initializable {
     @FXML
     TextArea EventDetail;
 
+    @FXML
+    private void clickbutton(){
+        System.out.println("点击了按钮");
+      //  mainapp.
+    }
+
     private Mainapp mainapp=null;
 
-
+    //初始化
     @Override
     public void initialize(URL location, ResourceBundle resources)
     {
@@ -51,9 +60,37 @@ public class OverAllController implements Initializable {
                         EventDetail.setText(newValue.getDetail());
                     }
                 })
-           );
+        );
+        EventList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton()== MouseButton.PRIMARY && event.getClickCount() == 2 )
+                {
+                    System.out.println("双击了条目");
+                    int index=EventList.getSelectionModel().getSelectedIndex();
+                    EventListNode selected=EventList.getSelectionModel().getSelectedItem();
+                    EventRemove(index,selected);
+                  //  mainapp.EventEditDialogShow();
+                }
+                else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
+                {
+                    
+                    System.out.println("单击了条目");
+                }
+            }
+        });
+    }
 
-
+    //删除某个Event
+    public void EventRemove(int index, EventListNode now){
+        mainapp.DeleteEvent(now.getName(),now.getRootListName(),now.isStatus());
+        // ShowCategory();
+        //
+        //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
+        //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getTotalEventNum());
+        CategoryList.refresh();
+        EventList.getItems().remove(index);
+        EventList.refresh();
     }
 
     //分类列表视图
@@ -161,10 +198,23 @@ public class OverAllController implements Initializable {
         }
     }
 
+    //显示列表视图
+    public void ShowCategory(){
+        CategoryList.setItems(null);
+        CategoryList.setItems(mainapp.getCategory());
+    }
+
 
     public void Setmainapp(Mainapp mainapp){
         this.mainapp=mainapp;
-        CategoryList.setItems(mainapp.getCategory());
+        ShowCategory();
+    }
+
+
+    @FXML
+    private void show()
+    {
+   //     mainapp.addCategory();
     }
 
 

@@ -58,6 +58,16 @@ public class CategoryListNode {
         this.CategoryName.set(categoryName);
     }
 
+    public void decreaseNum(boolean status) {
+
+        if (!status)
+        {
+            int un=getUnfinishedEventNum();
+            setUnfinishedEventNum(un-1);
+        }
+        int tmp=getTotalEventNum();
+        setTotalEventNum(tmp-1);
+    }
 
 
 }

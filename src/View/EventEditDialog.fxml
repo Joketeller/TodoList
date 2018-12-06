@@ -39,13 +39,13 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" />
+            <TextField fx:id="EventName" GridPane.columnIndex="1" />
             <Label alignment="CENTER" text="紧急程度：" textAlignment="CENTER" GridPane.rowIndex="1">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <MenuButton mnemonicParsing="false" text="请选择紧急程度" GridPane.columnIndex="1" GridPane.rowIndex="1">
+            <MenuButton fx:id="EvrntUrgency" mnemonicParsing="false" text="请选择紧急程度" GridPane.columnIndex="1" GridPane.rowIndex="1">
                <items>
                 <MenuItem mnemonicParsing="false" />
                 <MenuItem mnemonicParsing="false" text="Action 1" />
@@ -57,19 +57,19 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <TextField prefHeight="22.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
+            <TextField fx:id="StartTime" prefHeight="22.0" prefWidth="284.0" GridPane.columnIndex="1" GridPane.rowIndex="2" />
             <Label text="结束时间：" GridPane.rowIndex="3">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <TextField GridPane.columnIndex="1" GridPane.rowIndex="3" />
+            <TextField fx:id="EndTime" GridPane.columnIndex="1" GridPane.rowIndex="3" />
             <Label text="完成情况：" GridPane.rowIndex="4">
                <font>
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <MenuButton mnemonicParsing="false" text="是否完成" GridPane.columnIndex="1" GridPane.rowIndex="4">
+            <MenuButton fx:id="Status" mnemonicParsing="false" text="是否完成" GridPane.columnIndex="1" GridPane.rowIndex="4">
               <items>
                 <MenuItem mnemonicParsing="false" text="已完成" />
                 <MenuItem mnemonicParsing="false" text="未完成" />
@@ -80,10 +80,10 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <TextArea prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
+            <TextArea fx:id="EventDetail" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button layoutX="188.0" layoutY="472.0" mnemonicParsing="false" text="Button" />
-      <Button layoutX="407.0" layoutY="472.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="UpdateInfo" layoutX="177.0" layoutY="469.0" mnemonicParsing="false" text="Button" />
+      <Button fx:id="Cancel" layoutX="426.0" layoutY="469.0" mnemonicParsing="false" text="Button" />
    </children>
 </AnchorPane>

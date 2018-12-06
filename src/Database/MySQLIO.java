@@ -290,8 +290,8 @@ public class MySQLIO {
 
     //删除表数据，可用
     //不需要后续更新
-    public int DeleteListInfo(EventDetail Detail, String TableName){
-        String sql="DELETE FROM "+TableName+" WHERE id = "+Detail.getId()+";";
+    public int DeleteListInfo(String Name, String TableName){
+        String sql="DELETE FROM "+TableName+" WHERE Summary = '"+Name+"';";
         PreparedStatement pstmt=null;
         int result=0;
         try {

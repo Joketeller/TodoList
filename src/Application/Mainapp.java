@@ -7,13 +7,16 @@ import DataType.EventDetail;
 import Database.MySQLIO;
 import Model.CategoryListNode;
 import Model.EventListNode;
+import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -30,6 +33,7 @@ public class Mainapp extends Application {
 
     @Override
     public void start(Stage primaryStage) {
+        table=Link.QueryTheTableName();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ToDoList");
         initRootLayout();
@@ -69,7 +73,7 @@ public class Mainapp extends Application {
 
 
     public void setCategory(){
-        table=Link.QueryTheTableName();
+        Categories.clear();
         for (CategoryInfo tmp:table){
             tmp.setInfo(Link.QueryListInfo(tmp.getName()));
             tmp.calculatenum();
@@ -105,6 +109,51 @@ public class Mainapp extends Application {
             }
         }
     }
+
+    public void DeleteEvent(String Name,String RootName,boolean finsished) {
+        for (CategoryInfo tmp:table){
+            if (tmp.getName().equals(RootName)){
+                tmp.DeleteEvent(Name);
+
+                Link.DeleteListInfo(Name,RootName);
+            }
+        }
+    }
+
+
+
+    //新增加的界面
+    public void EventEditDialogShow(/*CategoryInfo now*/)
+    {
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/EventEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("编辑事项");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            EventEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+         //   controller.setPerson(person);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+         //   return controller.isOkClicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+       //     return false;
+        }
+    }
+
 
 
 }
