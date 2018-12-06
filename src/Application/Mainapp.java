@@ -10,10 +10,13 @@ import Model.EventListNode;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
+import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
 
 
@@ -104,6 +107,42 @@ public class Mainapp extends Application {
                 return;
             }
         }
+    }
+    @FXML
+
+    public void addCategory()
+    {
+        try
+        {
+            FXMLLoader loader = new FXMLLoader();
+            //Parent parent = FXMLLoader.load(getClass().getResource("MainLayout.fxml"));
+
+            // loader.setLocation();
+            loader.setLocation(Mainapp.class.getResource("/View/CategoryAddDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            // Create the dialog Stage.
+            //  Scene scene = new Scene(parent,300,200);
+
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("添加新的事件分类");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            CategoryAddDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            //controller.setCategory(newCate);
+
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+            //    return controller.isOkClicked();
+            // return true;
+        }catch (IOException e) {
+            e.printStackTrace();
+            //    return false;
+        }
+
     }
 
 
