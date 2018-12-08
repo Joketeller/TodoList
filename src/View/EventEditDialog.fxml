@@ -3,7 +3,6 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.MenuButton?>
-<?import javafx.scene.control.MenuItem?>
 <?import javafx.scene.control.TextArea?>
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
@@ -11,7 +10,6 @@
 <?import javafx.scene.layout.GridPane?>
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
-
 
 <AnchorPane prefHeight="536.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.EventEditDialogController">
    <children>
@@ -45,13 +43,7 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <MenuButton fx:id="EvrntUrgency" mnemonicParsing="false" text="请选择紧急程度" GridPane.columnIndex="1" GridPane.rowIndex="1">
-               <items>
-                <MenuItem mnemonicParsing="false" />
-                <MenuItem mnemonicParsing="false" text="Action 1" />
-                <MenuItem mnemonicParsing="false" text="Action 2" />
-               </items>
-            </MenuButton>
+            <MenuButton fx:id="EventUrgency" mnemonicParsing="false" text="请选择紧急程度" GridPane.columnIndex="1" GridPane.rowIndex="1" />
             <Label text="开始时间：" GridPane.rowIndex="2">
                <font>
                   <Font name="Arial" size="14.0" />
@@ -69,12 +61,7 @@
                   <Font name="Arial" size="14.0" />
                </font>
             </Label>
-            <MenuButton fx:id="Status" mnemonicParsing="false" text="是否完成" GridPane.columnIndex="1" GridPane.rowIndex="4">
-              <items>
-                <MenuItem mnemonicParsing="false" text="已完成" />
-                <MenuItem mnemonicParsing="false" text="未完成" />
-              </items>
-            </MenuButton>
+            <MenuButton fx:id="Status" mnemonicParsing="false" text="是否完成" GridPane.columnIndex="1" GridPane.rowIndex="4" />
             <Label alignment="CENTER" text="详细信息：" textAlignment="CENTER" GridPane.rowIndex="5">
                <font>
                   <Font name="Arial" size="14.0" />
@@ -83,7 +70,13 @@
             <TextArea fx:id="EventDetail" prefHeight="200.0" prefWidth="200.0" GridPane.columnIndex="1" GridPane.rowIndex="5" />
          </children>
       </GridPane>
-      <Button fx:id="UpdateInfo" layoutX="177.0" layoutY="469.0" mnemonicParsing="false" text="Button" />
-      <Button fx:id="Cancel" layoutX="426.0" layoutY="469.0" mnemonicParsing="false" text="Button" />
+      <Button layoutX="177.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleOK" text="确定">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font></Button>
+      <Button layoutX="426.0" layoutY="469.0" mnemonicParsing="false" onAction="#handleCancel" text="取消">
+         <font>
+            <Font name="Arial" size="13.0" />
+         </font></Button>
    </children>
 </AnchorPane>

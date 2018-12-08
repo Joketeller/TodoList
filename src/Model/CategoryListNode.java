@@ -6,9 +6,9 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.property.StringProperty;
 
 public class CategoryListNode {
-    private StringProperty CategoryName=new SimpleStringProperty();
-    private IntegerProperty UnfinishedEventNum =new SimpleIntegerProperty();
-    private IntegerProperty TotalEventNum=new SimpleIntegerProperty();
+    private final StringProperty CategoryName=new SimpleStringProperty();
+    private final IntegerProperty UnfinishedEventNum =new SimpleIntegerProperty();
+    private final IntegerProperty TotalEventNum=new SimpleIntegerProperty();
 
     public int getUnfinishedEventNum() {
         return UnfinishedEventNum.get();
@@ -36,10 +36,10 @@ public class CategoryListNode {
     }
 
     public void setTotalEventNum(int totalEventNum) {
-        this.UnfinishedEventNum.set(totalEventNum);
+        this.TotalEventNum.set(totalEventNum);
     }
 
-    public CategoryListNode(String categoryName,int total,int unfinished) {
+    public CategoryListNode(String categoryName, int total, int unfinished) {
         this.CategoryName.set(categoryName);
         this.UnfinishedEventNum.set(unfinished);
         this.TotalEventNum.set(total);
@@ -67,7 +67,18 @@ public class CategoryListNode {
         }
         int tmp=getTotalEventNum();
         setTotalEventNum(tmp-1);
+        //System.out.println(tmp-1);
+     //   System.out.println(TotalEventNum);
     }
 
+    public  void increaseNum(boolean status){
+        if (!status)
+        {
+            int un=getUnfinishedEventNum();
+            setUnfinishedEventNum(un+1);
+        }
+        int tmp=getTotalEventNum();
+        setTotalEventNum(tmp+1);
+    }
 
 }

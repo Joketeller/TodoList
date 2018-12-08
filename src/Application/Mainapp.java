@@ -159,7 +159,6 @@ public class Mainapp extends Application {
         for (CategoryInfo tmp:table){
             if (tmp.getName().equals(RootName)){
                 tmp.DeleteEvent(Name);
-
                 Link.DeleteListInfo(Name,RootName);
             }
         }
@@ -168,7 +167,7 @@ public class Mainapp extends Application {
 
 
     //新增加的界面
-    public void EventEditDialogShow(/*CategoryInfo now*/)
+    public boolean EventEditDialogShow(EventListNode now)
     {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -187,15 +186,14 @@ public class Mainapp extends Application {
             // Set the person into the controller.
             EventEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
-         //   controller.setPerson(person);
-
+            controller.setEventInfo(now);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
-         //   return controller.isOkClicked();
+            return controller.isokclicked();
         } catch (IOException e) {
             e.printStackTrace();
-       //     return false;
+            return false;
         }
     }
 

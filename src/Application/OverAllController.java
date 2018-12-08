@@ -5,6 +5,7 @@ import DataType.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,6 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import org.controlsfx.dialog.Dialogs;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -28,6 +30,8 @@ public class OverAllController implements Initializable {
     ListView<EventListNode> EventList;
     @FXML
     TextArea EventDetail;
+
+
 
     @FXML
     private void clickbutton(){
@@ -69,7 +73,9 @@ public class OverAllController implements Initializable {
                     System.out.println("双击了条目");
                     int index=EventList.getSelectionModel().getSelectedIndex();
                     EventListNode selected=EventList.getSelectionModel().getSelectedItem();
-                    EventRemove(index,selected);
+                    CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
+                    if (selected!=null && rootselected!=null)
+                     EventRemove(index,selected,rootselected);
                   //  mainapp.EventEditDialogShow();
                 }
                 else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
@@ -82,15 +88,17 @@ public class OverAllController implements Initializable {
     }
 
     //删除某个Event
-    public void EventRemove(int index, EventListNode now){
+    public void EventRemove(int index, EventListNode now,CategoryListNode root){
         mainapp.DeleteEvent(now.getName(),now.getRootListName(),now.isStatus());
+        root.decreaseNum(now.isStatus());
         // ShowCategory();
         //
         //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
         //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getTotalEventNum());
-        CategoryList.refresh();
+       // CategoryList.setItems(null);
+      //  CategoryList.setItems(mainapp.getCategory());
         EventList.getItems().remove(index);
-        EventList.refresh();
+        ShowEventDetail(null);
     }
 
     //分类列表视图
@@ -100,15 +108,19 @@ public class OverAllController implements Initializable {
             super.updateItem(item, empty);
             if (!empty && item != null) {
                 BorderPane cell = new BorderPane();
-                Text title = new Text(item.getCategoryName());
+                Text title = new Text();
+                title.textProperty().bind(item.categoryNameProperty());
                 title.setFont(Font.font("STKaiTi",16));
                 cell.setTop(title);
 //                System.out.println(item.getTotalEventNum());
-                Text numinfo = new Text(item.getTotalEventNum() + " 个任务");  //attention
+                //Text numinfo = new Text(item.getTotalEventNum() + " 个任务");  //attention
+                Text numinfo = new Text();
+                numinfo.textProperty().bind(item.totalEventNumProperty().asString().concat("个任务"));
                 numinfo.setFill(Color.BLUE);
                 numinfo.setFont(Font.font("STKaiTi",10));
                 cell.setLeft(numinfo);
-                Text unfinished = new Text("其中 " + item.getUnfinishedEventNum() + " 个未完成");
+                Text unfinished = new Text();
+                unfinished.textProperty().bind(item.unfinishedEventNumProperty().asString().concat("个任务未完成"));
                 unfinished.setFont(Font.font("STKaiTi",10));
                 unfinished.setFill(Color.LIGHTCORAL);
                 cell.setRight(unfinished);
@@ -128,11 +140,13 @@ public class OverAllController implements Initializable {
             if (!empty &&  item!=null)
             {
                 BorderPane cell=new BorderPane();
-                Text title= new Text(item.getName());
+                Text title= new Text();
+                title.textProperty().bind(item.nameProperty());
                 title.setFont(Font.font("STKaiTi",14));
-                Text Status=null;
-                Text BeginTime=new Text("开始时间："+item.getBeginTime());
-                Text EndTime=new Text("结束时间："+item.getEndTime());
+                Text BeginTime=new Text();
+                BeginTime.textProperty().bind(item.beginTimeProperty().concat("开始"));
+                Text EndTime=new Text();
+                EndTime.textProperty().bind(item.endTimeProperty().concat("截止"));
                 BeginTime.setFont(Font.font("STKaiTi",10));
                 EndTime.setFont(Font.font("STKaiTi",10));
                 BeginTime.setFill(Color.BLUE);
@@ -151,18 +165,56 @@ public class OverAllController implements Initializable {
                         Cir.setFill(Color.GREY);
                     }
                 }
+                item.urgencyProperty().addListener(((observable, oldValue, newValue) -> {
+                    if (newValue.intValue()==3)
+                    {
+                        Cir.setFill(Color.PURPLE);
+                    }
+                    else
+                    {
+                        if (newValue.intValue()==2){
+                            Cir.setFill(Color.CORAL);
+                        }
+                        else
+                        {
+                            if (newValue.intValue()==1){
+                                Cir.setFill(Color.LIGHTCORAL);
+                            }
+                            else
+                                Cir.setFill(Color.GREY);
+                        }
+                    }
+                }));
+                Text FinishedStatus=new Text("完成情况：已完成");
+                FinishedStatus.setFill(Color.GREY);
+                FinishedStatus.setFont(Font.font("STKaiTi",10));
+                Text UnfinishedStatus=new Text("完成情况：未完成");
+                UnfinishedStatus.setFont(Font.font("STKaiTi",10));
+                UnfinishedStatus.setFill(Color.RED);
                 if (item.isStatus()){
-                    Status=new Text("完成情况：已完成");
                     Cir.setFill(Color.LIGHTGREY);
-                    Status.setFill(Color.GREY);
+                    cell.setBottom(FinishedStatus);
+                   // Status.setFill(Color.GREY);
                 }
                 else {
-                    Status=new Text("完成情况：未完成");
-                    Status.setFill(Color.RED);
+                  //  Status.setText("完成情况：未完成");
+                    cell.setBottom(UnfinishedStatus);
                 }
-                Status.setFont(Font.font("STKaiTi",10));
+                item.statusProperty().addListener((observable, oldValue, newValue) -> {
+                    if (newValue.booleanValue()==true){
+                        //Status.setText("完成情况：已完成");
+                        Cir.setFill(Color.LIGHTGREY);
+                        cell.setBottom(FinishedStatus);
+                     //   Status.setFill(Color.GREY);
+                        ;
+                    }
+                    else {
+                        cell.setBottom(UnfinishedStatus);
+                    }
+                });
+           //     Status.setFont(Font.font("STKaiTi",10));
                 cell.setTop(title);
-                cell.setBottom(Status);
+              //  cell.setBottom(Status);
                 cell.setLeft(Cir);
                 cell.setCenter(BeginTime);
                 cell.setRight(EndTime);
@@ -208,19 +260,36 @@ public class OverAllController implements Initializable {
     public void Setmainapp(Mainapp mainapp){
         this.mainapp=mainapp;
         ShowCategory();
+        CategoryList.getFocusModel().focus(0);
     }
 
 
-    @FXML
-    private void show()
-    {
-   //     mainapp.addCategory();
-    }
+
     @FXML
     private void show()
     {
         mainapp.addCategory();
     }
 
+    @FXML
+    private void AddNewEvent() {
+        if (CategoryList.getSelectionModel().getSelectedItem()==null){
+            //弹窗界面得自己写，这个jar包感觉问题挺大的，会出错
+            Dialogs.create()
+                    .title("未选择分类")
+                    .masthead("请选择分类")
+                    .message("没有选择分类")
+                    .showError();
+        }
+        else {
+            EventListNode tmp = new EventListNode();
+            tmp.setRootListName(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
+            boolean ok = mainapp.EventEditDialogShow(tmp);
+            if (ok) {
+                mainapp.getEvents(tmp.getRootListName()).add(tmp);
+                CategoryList.getSelectionModel().getSelectedItem().increaseNum(tmp.isStatus());
+            }
+        }
+    }
 
 }

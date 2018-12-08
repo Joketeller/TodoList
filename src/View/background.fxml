@@ -30,7 +30,7 @@
                   <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="200.0" prefWidth="200.0">
                      <children>
                         <ListView fx:id="EventList" editable="true" layoutY="26.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="566.0" prefWidth="227.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="27.0" />
-                        <Button maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#clickbutton" prefHeight="27.0" text="添加新事项" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
+                        <Button maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" onAction="#AddNewEvent" prefHeight="27.0" text="添加新事项" textAlignment="CENTER" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0" />
                      </children>
                   </AnchorPane>
                </content>

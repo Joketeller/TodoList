@@ -18,7 +18,13 @@ public class CategoryInfo {
         Info = info;
     }
 
+    public CategoryInfo(String name) {
+        Name = name;
+    }
 
+    public CategoryInfo(){
+        super();
+    }
 
     public String getName() {
         return Name;

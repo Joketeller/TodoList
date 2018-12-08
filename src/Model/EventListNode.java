@@ -19,6 +19,10 @@ public class EventListNode {
         return EndTime.get();
     }
 
+    public EventListNode(){
+        super();
+    }
+
     public StringProperty endTimeProperty() {
         return EndTime;
     }
@@ -108,4 +112,5 @@ public class EventListNode {
     public void setDetail(String detail) {
         this.Detail.set(detail);
     }
+
 }
