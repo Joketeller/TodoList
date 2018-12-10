@@ -102,58 +102,25 @@ public class Mainapp extends Application {
         for (CategoryInfo now:table){
             if (Cate.equals(now.getName()))
             {
-                for (EventDetail tmp:now.getInfo())
-                {
-                    Events.add(new EventListNode(tmp));
-                }
+            //    if (now.getInfo()!=null)
+                    for (EventDetail tmp:now.getInfo())
+                    {
+                        if (tmp!=null)
+                            Events.add(new EventListNode(tmp));
+                    }
                 return;
             }
         }
     }
     public void newCategory(String cateName)
     {
-        // Scanner scan = new Scanner(System.in);
-        //  scan.close();
-        table.add(new CategoryInfo(cateName));
+        CategoryInfo now=new CategoryInfo(cateName);
+        now.newinfo();
+        table.add(now);
         Categories.add(new CategoryListNode(cateName,0,0));
+        Link.CreateTable(cateName);
     }
 
-    @FXML
-
-    public void addCategory()
-    {
-        try
-        {
-            FXMLLoader loader = new FXMLLoader();
-            //Parent parent = FXMLLoader.load(getClass().getResource("MainLayout.fxml"));
-
-            // loader.setLocation();
-            loader.setLocation(Mainapp.class.getResource("/View/CategoryAddDialog.fxml"));
-            AnchorPane page = (AnchorPane) loader.load();
-            // Create the dialog Stage.
-            //  Scene scene = new Scene(parent,300,200);
-
-            Stage dialogStage = new Stage();
-            dialogStage.setTitle("添加新的事件分类");
-            dialogStage.initModality(Modality.WINDOW_MODAL);
-            dialogStage.initOwner(primaryStage);
-            Scene scene = new Scene(page);
-            dialogStage.setScene(scene);
-
-            CategoryAddDialogController controller = loader.getController();
-            controller.setDialogStage(dialogStage);
-            //controller.setCategory(newCate);
-
-            // Show the dialog and wait until the user closes it
-            dialogStage.showAndWait();
-            //    return controller.isOkClicked();
-            // return true;
-        }catch (IOException e) {
-            e.printStackTrace();
-            //    return false;
-        }
-
-    }
 
     public void DeleteEvent(String Name,String RootName,boolean finsished) {
         for (CategoryInfo tmp:table){
@@ -165,8 +132,8 @@ public class Mainapp extends Application {
     }
 
 
-
     //新增加的界面
+    //编辑事项
     public boolean EventEditDialogShow(EventListNode now)
     {
         try {
@@ -197,6 +164,93 @@ public class Mainapp extends Application {
         }
     }
 
+    //添加event
+    public void AddEvent(EventListNode now,String root){
+        for (CategoryInfo tmp:table){
+            if (tmp.getName().equals(root)){
+                EventDetail one=new EventDetail(0,now.getDetail(),now.getName(),now.getUrgency(),now.isStatus(),now.getBeginTime(),now.getEndTime());
+                tmp.addevent(one);
+                Link.InsertList(one,root);
+            }
+        }
+    }
 
+
+    //添加Category
+    public boolean CategoryDialogShow(CategoryListNode now){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/CategoryEditDialog.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+
+            // Create the dialog Stage.
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("编辑分类");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+
+            // Set the person into the controller.
+            CategoryEditDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setcategory(now);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            return controller.isokclicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public void EditCategory(String before,String after){
+        Link.RenameTable(before,after);
+        for (CategoryInfo now:table){
+            if (now.getName().equals(before)) {
+                now.setName(after);
+                break;
+            }
+        }
+    }
+
+    public void DeleteCategory(String CateName){
+        for (CategoryInfo tmp:table){
+            if (tmp.getName().equals(CateName)){
+                table.remove(tmp);
+                break;
+            }
+        }
+        Link.DropTable(CateName);
+    }
+
+
+    public void ShowErrorPage(String ErorrInformation){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/Warning.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("出错了");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            WarningController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.seterrorinformation(ErorrInformation);
+         //   controller.setcategory(now);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+
+            //return controller.isokclicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+         //   return false;
+        }
+    }
 
 }

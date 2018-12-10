@@ -40,7 +40,7 @@ public class EventEditDialogController implements Initializable {
     @FXML
     MenuButton Status;
 
-    int urgency=0;
+    int urgency=1;
     boolean status=false;
     boolean okclicked=false;
     @Override

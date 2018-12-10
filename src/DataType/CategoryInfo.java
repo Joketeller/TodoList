@@ -1,5 +1,8 @@
 package DataType;
 
+import Model.EventListNode;
+
+import java.util.ArrayList;
 import java.util.List;
 
 public class CategoryInfo {
@@ -16,6 +19,10 @@ public class CategoryInfo {
 
     public void setInfo(List<EventDetail> info) {
         Info = info;
+    }
+
+    public void newinfo(){
+        Info=new ArrayList<EventDetail>();
     }
 
     public CategoryInfo(String name) {
@@ -78,6 +85,11 @@ public class CategoryInfo {
                 break;
             }
         }
+        calculatenum();
+    }
+
+    public void addevent(EventDetail now){
+        Info.add(now);
         calculatenum();
     }
 }

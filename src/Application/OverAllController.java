@@ -31,14 +31,6 @@ public class OverAllController implements Initializable {
     @FXML
     TextArea EventDetail;
 
-
-
-    @FXML
-    private void clickbutton(){
-        System.out.println("点击了按钮");
-      //  mainapp.
-    }
-
     private Mainapp mainapp=null;
 
     //初始化
@@ -52,8 +44,9 @@ public class OverAllController implements Initializable {
         CategoryList.getFocusModel().focusedItemProperty().addListener(
                 ((observable, oldValue, newValue) -> {
                     if (newValue!=null) {
-                        System.out.println("selecting " + newValue);
+                     //   System.out.println("selecting " + newValue);
                         ShowEventList(newValue);
+                        EventDetail.setText("");
                     }
                 })
         );
@@ -75,16 +68,44 @@ public class OverAllController implements Initializable {
                     EventListNode selected=EventList.getSelectionModel().getSelectedItem();
                     CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
                     if (selected!=null && rootselected!=null)
-                     EventRemove(index,selected,rootselected);
+                     //EventRemove(index,selected,rootselected);
+                        EditEvent(selected);
                   //  mainapp.EventEditDialogShow();
                 }
                 else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
                 {
                     
                     System.out.println("单击了条目");
+                    if (EventList.getSelectionModel().getSelectedItem()!=null)
+                        EventDetail.setText(EventList.getSelectionModel().getSelectedItem().getDetail());
                 }
             }
         });
+
+        CategoryList.setOnMouseClicked(new EventHandler<MouseEvent>() {
+            @Override
+            public void handle(MouseEvent event) {
+                if (event.getButton()== MouseButton.PRIMARY && event.getClickCount() == 2 )
+                {
+                    System.out.println("双击了条目");
+                    int index=CategoryList.getSelectionModel().getSelectedIndex();
+                    CategoryListNode selected=CategoryList.getSelectionModel().getSelectedItem();
+                  //  CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
+                    if (selected!=null)
+                        //EventRemove(index,selected,rootselected);
+                     DeleteCategory(selected,index);
+                        //   EditCategory(selected);
+                    //  mainapp.EventEditDialogShow();
+                }
+                else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
+                {
+
+                    System.out.println("单击了条目");
+                    //ShowEventDetail(null);
+                }
+            }
+        });
+
     }
 
     //删除某个Event
@@ -92,13 +113,13 @@ public class OverAllController implements Initializable {
         mainapp.DeleteEvent(now.getName(),now.getRootListName(),now.isStatus());
         root.decreaseNum(now.isStatus());
         // ShowCategory();
-        //
         //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
         //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getTotalEventNum());
        // CategoryList.setItems(null);
       //  CategoryList.setItems(mainapp.getCategory());
         EventList.getItems().remove(index);
-        ShowEventDetail(null);
+        //ShowEventDetail(null);
+        EventDetail.setText("");
     }
 
     //分类列表视图
@@ -232,7 +253,10 @@ public class OverAllController implements Initializable {
     private void ShowEventList(CategoryListNode Cate)
     {
         EventList.setItems(null);
-        EventList.setItems(mainapp.getEvents(Cate.getCategoryName()));
+        if (Cate!=null) {
+            EventList.setItems(mainapp.getEvents(Cate.getCategoryName()));
+            EventList.getSelectionModel().selectFirst();
+        }
     }
 
 
@@ -261,35 +285,93 @@ public class OverAllController implements Initializable {
         this.mainapp=mainapp;
         ShowCategory();
         CategoryList.getFocusModel().focus(0);
-    }
-
-
-
-    @FXML
-    private void show()
-    {
-        mainapp.addCategory();
+        CategoryList.getSelectionModel().selectFirst();
     }
 
     @FXML
     private void AddNewEvent() {
         if (CategoryList.getSelectionModel().getSelectedItem()==null){
             //弹窗界面得自己写，这个jar包感觉问题挺大的，会出错
-            Dialogs.create()
-                    .title("未选择分类")
-                    .masthead("请选择分类")
-                    .message("没有选择分类")
-                    .showError();
+//            Dialogs.create()
+//                    .title("未选择分类")
+//                    .masthead("请选择分类")
+//                    .message("没有选择分类")
+//                    .showError();
+            mainapp.ShowErrorPage("未选择分类");
         }
         else {
             EventListNode tmp = new EventListNode();
             tmp.setRootListName(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
             boolean ok = mainapp.EventEditDialogShow(tmp);
             if (ok) {
+                //界面层数据更改
                 mainapp.getEvents(tmp.getRootListName()).add(tmp);
                 CategoryList.getSelectionModel().getSelectedItem().increaseNum(tmp.isStatus());
+                //下面是数据层数据更改
+                mainapp.AddEvent(tmp,CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
             }
         }
+    }
+
+
+    private void EditEvent(EventListNode now){
+        if (CategoryList.getSelectionModel().getSelectedItem()==null){
+            //弹窗界面得自己写，这个jar包感觉问题挺大的，会出错
+//            Dialogs.create()
+//                    .title("未选择分类")
+//                    .masthead("请选择分类")
+//                    .message("没有选择分类")
+//                    .showError();
+            mainapp.ShowErrorPage("未选择分类");
+        }
+        else {
+           // EventListNode tmp = new EventListNode();
+//            now.setRootListName(CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
+            boolean changed=now.isStatus();
+            String name=new String(now.getName());
+            String root=new String(now.getRootListName());
+            boolean ok = mainapp.EventEditDialogShow(now);
+            if (ok) {
+                //界面层数据更改
+                CategoryList.getSelectionModel().getSelectedItem().decreaseNum(changed);
+//                mainapp.getEvents(now.getRootListName()).add(now);
+                CategoryList.getSelectionModel().getSelectedItem().increaseNum(now.isStatus());
+                //下面是数据层数据更改
+                mainapp.DeleteEvent(name,root,changed);
+                mainapp.AddEvent(now,CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
+            }
+        }
+    }
+
+    @FXML
+    private void AddCategory(){
+        CategoryListNode now=new CategoryListNode();
+        boolean ok=mainapp.CategoryDialogShow(now);
+        if (ok){
+            //界面层修改
+           // CategoryList.getItems().add(now);
+          //  CategoryList.refresh();
+            //数据层修改
+            mainapp.newCategory(now.getCategoryName());
+        }
+    }
+
+    //编辑Category
+    private void EditCategory(CategoryListNode now){
+        String changed=now.getCategoryName();
+        boolean ok=mainapp.CategoryDialogShow(now);
+        if (ok){
+            mainapp.EditCategory(changed,now.getCategoryName());
+        }
+    }
+
+    //删除分类
+    private void DeleteCategory(CategoryListNode now,int index){
+      //  ShowEventDetail(null);
+        ShowEventList(null);
+        EventDetail.setText("");
+        mainapp.DeleteCategory(now.getCategoryName());
+        CategoryList.getItems().remove(index);
     }
 
 }

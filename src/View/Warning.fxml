@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.WarningController">
+   <children>
+      <Label alignment="CENTER" layoutX="258.0" layoutY="27.0" prefHeight="39.0" prefWidth="85.0" text="错误" textAlignment="CENTER" textFill="#c60505">
+         <font>
+            <Font name="Arial Bold Italic" size="31.0" />
+         </font>
+      </Label>
+      <Label fx:id="ErrorInformation" layoutX="113.0" layoutY="95.0" prefHeight="211.0" prefWidth="356.0" />
+      <Button layoutX="271.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleOK" text="确认" />
+   </children>
+</AnchorPane>
