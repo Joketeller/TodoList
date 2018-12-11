@@ -6,6 +6,7 @@ import Model.CategoryListNode;
 import Model.EventListNode;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
@@ -40,6 +41,7 @@ public class OverAllController implements Initializable {
 
 
     FilteredList<EventListNode> FilteredEventList=null;
+    ObservableList<EventListNode> OrginalEventList=null;
     private Mainapp mainapp=null;
 
     //初始化
@@ -92,10 +94,10 @@ public class OverAllController implements Initializable {
                     System.out.println("右键点击了条目");
                     boolean ok=mainapp.ShowConfirmPage();
                     if (ok){
-                        int index=EventList.getSelectionModel().getSelectedIndex();
+                       // int index=EventList.getSelectionModel().getSelectedIndex();
                         EventListNode selected=EventList.getSelectionModel().getSelectedItem();
                         CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
-                        EventRemove(index,selected,rootselected);
+                        EventRemove(selected,rootselected);
                     }
                 }
             }
@@ -150,7 +152,7 @@ public class OverAllController implements Initializable {
     }
 
     //删除某个Event
-    public void EventRemove(int index, EventListNode now,CategoryListNode root){
+    public void EventRemove(EventListNode now,CategoryListNode root){
         mainapp.DeleteEvent(now.getName(),now.getRootListName(),now.isStatus());
         root.decreaseNum(now.isStatus());
         // ShowCategory();
@@ -158,7 +160,8 @@ public class OverAllController implements Initializable {
         //    System.out.println(CategoryList.getSelectionModel().getSelectedItem().getTotalEventNum());
        // CategoryList.setItems(null);
       //  CategoryList.setItems(mainapp.getCategory());
-        EventList.getItems().remove(index);
+        //EventList.getItems().remove();
+        OrginalEventList.remove(now);
         //ShowEventDetail(null);
         EventDetail.setText("");
     }
@@ -296,7 +299,8 @@ public class OverAllController implements Initializable {
         EventList.setItems(null);
         FilterTag.setSelected(false);
         if (Cate!=null) {
-            FilteredEventList=new FilteredList<>(mainapp.getEvents(Cate.getCategoryName()),p->true);
+            OrginalEventList=mainapp.getEvents(Cate.getCategoryName());
+            FilteredEventList=new FilteredList<>(OrginalEventList,p->true);
             EventList.setItems(FilteredEventList);
             EventList.getSelectionModel().selectFirst();
         }
