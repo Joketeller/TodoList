@@ -37,7 +37,7 @@ public class OverAllController implements Initializable {
     CheckBox FilterTag;
 
     @FXML
-    ChoiceBox SortWay;
+    CheckBox SortTag;
 
 
     FilteredList<EventListNode> FilteredEventList=null;
