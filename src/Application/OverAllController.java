@@ -8,6 +8,7 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
+import javafx.collections.transformation.SortedList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -39,7 +40,7 @@ public class OverAllController implements Initializable {
     @FXML
     CheckBox SortTag;
 
-
+    SortedList<EventListNode> SortedEventList=null;
     FilteredList<EventListNode> FilteredEventList=null;
     ObservableList<EventListNode> OrginalEventList=null;
     private Mainapp mainapp=null;
@@ -91,8 +92,12 @@ public class OverAllController implements Initializable {
                 {
                     
                     System.out.println("单击了条目");
-                    if (EventList.getSelectionModel().getSelectedItem()!=null)
+                    if (EventList.getSelectionModel().getSelectedItem()!=null) {
                         EventDetail.setText(EventList.getSelectionModel().getSelectedItem().getDetail());
+                        System.out.println(EventList.getSelectionModel().getSelectedItem().getName());
+                        System.out.println(EventList.getSelectionModel().getSelectedItem().getRootListName());
+                    }
+
                 }
                 else if (event.getButton()==MouseButton.SECONDARY && event.getClickCount()==1){
                     System.out.println("右键点击了条目");
@@ -153,6 +158,18 @@ public class OverAllController implements Initializable {
                         return true;
                 }
             });
+        });
+
+        SortTag.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.booleanValue()==false){
+                SortedEventList.setComparator(null);
+            }
+            else
+            {
+                SortedEventList.setComparator((u,v)->{
+                    return v.getUrgency()-u.getUrgency();
+                });
+            }
         });
     }
 
@@ -306,7 +323,9 @@ public class OverAllController implements Initializable {
         if (Cate!=null) {
             OrginalEventList=mainapp.getEvents(Cate.getCategoryName());
             FilteredEventList=new FilteredList<>(OrginalEventList,p->true);
-            EventList.setItems(FilteredEventList);
+            SortedEventList=new SortedList<>(FilteredEventList);
+            SortedEventList.setComparator(null);
+            EventList.setItems(SortedEventList);
             EventList.getSelectionModel().selectFirst();
         }
     }
@@ -357,7 +376,7 @@ public class OverAllController implements Initializable {
             boolean ok = mainapp.EventEditDialogShow(tmp);
             if (ok) {
                 //界面层数据更改
-                mainapp.getEvents(tmp.getRootListName()).add(tmp);
+                OrginalEventList.add(tmp);
                 CategoryList.getSelectionModel().getSelectedItem().increaseNum(tmp.isStatus());
                 //下面是数据层数据更改
                 mainapp.AddEvent(tmp,CategoryList.getSelectionModel().getSelectedItem().getCategoryName());
