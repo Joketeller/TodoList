@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.controlsfx.dialog.Dialogs;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -16,6 +15,12 @@ public class CategoryEditDialogController implements Initializable {
     Stage dialogStage = new Stage();
     @FXML
     TextField CategoryName;
+
+    Mainapp mainapp=null;
+
+    public void setMainapp(Mainapp mainapp){
+        this.mainapp=mainapp;
+    }
 
     boolean okclicked=false;
  //   CategoryInfo cate=new CategoryInfo();
@@ -56,11 +61,12 @@ public class CategoryEditDialogController implements Initializable {
             return true;
         } else {
             // Show the error message.
-            Dialogs.create()
-                    .title("无效输入")
-                    .masthead("请修正错误输入")
-                    .message(errorMessage)
-                    .showError();
+//            Dialogs.create()
+//                    .title("无效输入")
+//                    .masthead("请修正错误输入")
+//                    .message(errorMessage)
+//                    .showError();
+            mainapp.ShowErrorPage(errorMessage);
             return false;
         }
     }

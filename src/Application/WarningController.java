@@ -27,7 +27,6 @@ public class WarningController implements Initializable {
 
     @Override
     public void initialize(URL location, ResourceBundle resources){
-
     }
 
     public void seterrorinformation(String Name){

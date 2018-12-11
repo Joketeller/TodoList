@@ -17,7 +17,7 @@ import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
-import org.controlsfx.dialog.Dialogs;
+
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -31,6 +31,7 @@ public class OverAllController implements Initializable {
     @FXML
     TextArea EventDetail;
 
+    
     private Mainapp mainapp=null;
 
     //初始化
@@ -64,10 +65,10 @@ public class OverAllController implements Initializable {
                 if (event.getButton()== MouseButton.PRIMARY && event.getClickCount() == 2 )
                 {
                     System.out.println("双击了条目");
-                    int index=EventList.getSelectionModel().getSelectedIndex();
+                    //int index=EventList.getSelectionModel().getSelectedIndex();
                     EventListNode selected=EventList.getSelectionModel().getSelectedItem();
-                    CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
-                    if (selected!=null && rootselected!=null)
+                 //   CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
+                    if (selected!=null)
                      //EventRemove(index,selected,rootselected);
                         EditEvent(selected);
                   //  mainapp.EventEditDialogShow();
@@ -78,6 +79,16 @@ public class OverAllController implements Initializable {
                     System.out.println("单击了条目");
                     if (EventList.getSelectionModel().getSelectedItem()!=null)
                         EventDetail.setText(EventList.getSelectionModel().getSelectedItem().getDetail());
+                }
+                else if (event.getButton()==MouseButton.SECONDARY && event.getClickCount()==1){
+                    System.out.println("右键点击了条目");
+                    boolean ok=mainapp.ShowConfirmPage();
+                    if (ok){
+                        int index=EventList.getSelectionModel().getSelectedIndex();
+                        EventListNode selected=EventList.getSelectionModel().getSelectedItem();
+                        CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
+                        EventRemove(index,selected,rootselected);
+                    }
                 }
             }
         });
@@ -93,15 +104,21 @@ public class OverAllController implements Initializable {
                   //  CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
                     if (selected!=null)
                         //EventRemove(index,selected,rootselected);
-                     DeleteCategory(selected,index);
-                        //   EditCategory(selected);
+                    // DeleteCategory(selected,index);
+                           EditCategory(selected);
                     //  mainapp.EventEditDialogShow();
                 }
-                else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
-                {
-
+                else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1) {
                     System.out.println("单击了条目");
                     //ShowEventDetail(null);
+                    EventDetail.setText("");
+                } else if (event.getButton()==MouseButton.SECONDARY && event.getClickCount() == 1){
+                    boolean ok=mainapp.ShowConfirmPage();
+                    if (ok) {
+                        int index = CategoryList.getSelectionModel().getSelectedIndex();
+                        CategoryListNode selected = CategoryList.getSelectionModel().getSelectedItem();
+                        DeleteCategory(selected, index);
+                    }
                 }
             }
         });

@@ -10,7 +10,6 @@ import javafx.scene.control.MenuItem;
 import javafx.scene.control.TextArea;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
-import org.controlsfx.dialog.Dialogs;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -27,6 +26,9 @@ public class EventEditDialogController implements Initializable {
         dialogStage.close();
     }
 
+    private Mainapp  mainapp=null;
+
+    public
     @FXML
     TextField EventName;
     @FXML
@@ -75,6 +77,11 @@ public class EventEditDialogController implements Initializable {
             Status.setText("未完成");
             status=false;
         });
+    }
+
+
+    public void setMainapp(Mainapp mainapp){
+        this.mainapp=mainapp;
     }
 
     public void setEventInfo(EventListNode pre){
@@ -138,11 +145,7 @@ public class EventEditDialogController implements Initializable {
             return true;
         } else {
             // Show the error message.
-            Dialogs.create()
-                    .title("无效输入")
-                    .masthead("请修正错误输入")
-                    .message(errorMessage)
-                    .showError();
+            mainapp.ShowErrorPage(errorMessage);
             return false;
         }
 

@@ -15,6 +15,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.image.Image;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
@@ -37,6 +38,7 @@ public class Mainapp extends Application {
         table=Link.QueryTheTableName();
         this.primaryStage = primaryStage;
         this.primaryStage.setTitle("ToDoList");
+        this.primaryStage.getIcons().add(new Image("file:resources/images/icon.jpg"));
         initRootLayout();
         Backgroundshow();
         // System.out.println("ok!");
@@ -137,24 +139,19 @@ public class Mainapp extends Application {
     public boolean EventEditDialogShow(EventListNode now)
     {
         try {
-            // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(Mainapp.class.getResource("/View/EventEditDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
-
-            // Create the dialog Stage.
             Stage dialogStage = new Stage();
             dialogStage.setTitle("编辑事项");
             dialogStage.initModality(Modality.WINDOW_MODAL);
             dialogStage.initOwner(primaryStage);
             Scene scene = new Scene(page);
             dialogStage.setScene(scene);
-
-            // Set the person into the controller.
             EventEditDialogController controller = loader.getController();
+            controller.setMainapp(this);
             controller.setDialogStage(dialogStage);
             controller.setEventInfo(now);
-            // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
 
             return controller.isokclicked();
@@ -195,6 +192,7 @@ public class Mainapp extends Application {
             // Set the person into the controller.
             CategoryEditDialogController controller = loader.getController();
             controller.setDialogStage(dialogStage);
+            controller.setMainapp(this);
             controller.setcategory(now);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();
@@ -253,4 +251,24 @@ public class Mainapp extends Application {
         }
     }
 
+    public boolean ShowConfirmPage(){
+        try {
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/ConfirmDialog.fxml"));
+            AnchorPane page=(AnchorPane)loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("确认选择");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            ConfirmDialogController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            dialogStage.showAndWait();
+            return controller.isokclicked();
+        }catch (IOException e){
+            e.printStackTrace();
+            return false;
+        }
+    }
 }

@@ -12,7 +12,10 @@
             <Font name="Arial Bold Italic" size="31.0" />
          </font>
       </Label>
-      <Label fx:id="ErrorInformation" layoutX="113.0" layoutY="95.0" prefHeight="211.0" prefWidth="356.0" />
+      <Label fx:id="ErrorInformation" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="85.0" prefHeight="204.0" prefWidth="322.0" textAlignment="CENTER">
+         <font>
+            <Font name="Arial" size="18.0" />
+         </font></Label>
       <Button layoutX="271.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleOK" text="确认" />
    </children>
 </AnchorPane>
