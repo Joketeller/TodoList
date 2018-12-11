@@ -6,6 +6,7 @@ import Model.CategoryListNode;
 import Model.EventListNode;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -31,7 +32,14 @@ public class OverAllController implements Initializable {
     @FXML
     TextArea EventDetail;
 
-    
+    @FXML
+    CheckBox FilterTag;
+
+    @FXML
+    ChoiceBox SortWay;
+
+
+    FilteredList<EventListNode> FilteredEventList=null;
     private Mainapp mainapp=null;
 
     //初始化
@@ -123,6 +131,22 @@ public class OverAllController implements Initializable {
             }
         });
 
+        FilterTag.allowIndeterminateProperty().setValue(false);
+        //过滤列表使用
+        FilterTag.selectedProperty().addListener((observable, oldValue, newValue) -> {
+            FilteredEventList.setPredicate(Event->{
+                if (newValue.booleanValue()==false){
+                    return true;
+                }
+                else
+                {
+                    if (Event.isStatus())
+                        return false;
+                    else
+                        return true;
+                }
+            });
+        });
     }
 
     //删除某个Event
@@ -270,8 +294,10 @@ public class OverAllController implements Initializable {
     private void ShowEventList(CategoryListNode Cate)
     {
         EventList.setItems(null);
+        FilterTag.setSelected(false);
         if (Cate!=null) {
-            EventList.setItems(mainapp.getEvents(Cate.getCategoryName()));
+            FilteredEventList=new FilteredList<>(mainapp.getEvents(Cate.getCategoryName()),p->true);
+            EventList.setItems(FilteredEventList);
             EventList.getSelectionModel().selectFirst();
         }
     }
