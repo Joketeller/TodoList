@@ -81,6 +81,10 @@ public class OverAllController implements Initializable {
                     if (selected!=null)
                      //EventRemove(index,selected,rootselected);
                         EditEvent(selected);
+                    boolean freshedtt=FilterTag.isSelected();
+                    FilterTag.setSelected(!freshedtt);
+                    FilterTag.setSelected(freshedtt);
+                   // EventList.refresh();
                   //  mainapp.EventEditDialogShow();
                 }
                 else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1)
@@ -98,6 +102,7 @@ public class OverAllController implements Initializable {
                         EventListNode selected=EventList.getSelectionModel().getSelectedItem();
                         CategoryListNode rootselected=CategoryList.getSelectionModel().getSelectedItem();
                         EventRemove(selected,rootselected);
+                        //EventList.refresh();
                     }
                 }
             }
