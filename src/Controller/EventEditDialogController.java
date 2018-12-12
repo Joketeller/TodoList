@@ -155,7 +155,7 @@ public class EventEditDialogController implements Initializable {
         if (urgency==0){
             errorMessage+="无效紧急度\n";
         }
-        if (EventDetail.getText().length()==0 || EventDetail.getText()==null){
+        if (EventDetail.getText()==null||EventDetail.getText().length()==0){
             errorMessage+="详细信息未填写\n";
         }
         if (errorMessage.length() == 0) {

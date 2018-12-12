@@ -3,6 +3,7 @@ package Controller;
 import Utils.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
+import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -37,7 +38,7 @@ public class OverAllController implements Initializable {
     CheckBox FilterTag;
 
     @FXML
-    CheckBox SortTag;
+    ChoiceBox SortWay;
 
     SortedList<EventListNode> SortedEventList=null;
     FilteredList<EventListNode> FilteredEventList=null;
@@ -159,17 +160,57 @@ public class OverAllController implements Initializable {
             });
         });
 
-        SortTag.selectedProperty().addListener((observable, oldValue, newValue) -> {
-            if (newValue.booleanValue()==false){
+//        SortTag.selectedProperty().addListener((observable, oldValue, newValue) -> {
+//            if (newValue.booleanValue()==false){
+//                SortedEventList.setComparator(null);
+//            }
+//            else
+//            {
+//                SortedEventList.setComparator((u,v)->{
+//                    return v.getUrgency()-u.getUrgency();
+//                });
+//            }
+//        });
+        SortWay.setItems(FXCollections.observableArrayList("按修改时间排序","按紧急度排序", "按开始时间排序", "按截止时间排序"));
+       // SortWay.setAccessibleText("选择排序方式");
+        SortWay.getSelectionModel().select(0);
+        SortWay.getSelectionModel().selectedIndexProperty().addListener((observable, oldValue, newValue) -> {
+            if (newValue.intValue()==0){
                 SortedEventList.setComparator(null);
             }
             else
-            {
-                SortedEventList.setComparator((u,v)->{
-                    return v.getUrgency()-u.getUrgency();
-                });
-            }
+                if (newValue.intValue()==1){
+                    SortedEventList.setComparator((u,v)->{
+                        return v.getUrgency()-u.getUrgency();
+                    });
+                }
+                else
+                    if (newValue.intValue()==2){
+                        SortedEventList.setComparator((u,v)->{
+                            if (u.getStartYear()!=v.getStartYear())
+                                return u.getStartYear()-v.getStartYear();
+                            else
+                                if (u.getStartMonth()!=u.getStartMonth())
+                                    return u.getStartMonth()-v.getStartMonth();
+                                else
+                                    return u.getStartDay()-v.getStartDay();
+                        });
+                    }
+                    else
+                        if (newValue.intValue()==3){
+                            SortedEventList.setComparator((u,v)->{
+                                if (u.getEndYear()!=v.getEndYear())
+                                    return u.getEndYear()-v.getEndYear();
+                                else
+                                    if (u.getEndMonth()!=v.getEndMonth())
+                                        return u.getEndMonth()-v.getEndMonth();
+                                    else
+                                        return u.getEndDay()-v.getEndDay();
+                            });
+                        }
         });
+
+        SortWay.setTooltip(new Tooltip("选择排序方式"));
     }
 
     //删除某个Event
@@ -210,6 +251,19 @@ public class OverAllController implements Initializable {
                 unfinished.setFont(Font.font("STKaiTi",10));
                 unfinished.setFill(Color.LIGHTCORAL);
                 cell.setRight(unfinished);
+                ProgressBar pb=new ProgressBar();
+                pb.setMinHeight(10);
+                pb.setMaxHeight(10);
+                pb.setMaxWidth(10000);
+                pb.setProgress((double)(item.getTotalEventNum()-item.getUnfinishedEventNum())/(double)item.getTotalEventNum());
+                item.unfinishedEventNumProperty().addListener(observable -> {
+                    pb.setProgress((double)(item.getTotalEventNum()-item.getUnfinishedEventNum())/(double)item.getTotalEventNum());
+                });
+                item.totalEventNumProperty().addListener(observable -> {
+                    pb.setProgress((double)(item.getTotalEventNum()-item.getUnfinishedEventNum())/(double)item.getTotalEventNum());
+                });
+
+                cell.setBottom(pb);
                 setGraphic(cell);
             } else if (empty) {
                 setText(null);
