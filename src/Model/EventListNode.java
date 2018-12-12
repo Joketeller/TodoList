@@ -13,6 +13,7 @@ public class EventListNode {
     private final BooleanProperty Status=new SimpleBooleanProperty();
     private final IntegerProperty Urgency=new SimpleIntegerProperty();
     private final StringProperty Detail=new SimpleStringProperty();
+
     public String getEndTime() {
         return EndTime.get();
     }

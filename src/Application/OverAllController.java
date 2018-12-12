@@ -246,7 +246,7 @@ public class OverAllController implements Initializable {
                     if (item.getUrgency() == 2) {
                         Cir.setFill(Color.CORAL);
                     } else if (item.getUrgency() == 1) {
-                        Cir.setFill(Color.LIGHTGREEN);
+                        Cir.setFill(Color.GREEN);
                     } else if (item.getUrgency() == 0) {
                         Cir.setFill(Color.GREY);
                     }
@@ -264,7 +264,7 @@ public class OverAllController implements Initializable {
                         else
                         {
                             if (newValue.intValue()==1){
-                                Cir.setFill(Color.LIGHTGREEN);
+                                Cir.setFill(Color.GREEN);
                             }
                             else
                                 Cir.setFill(Color.GREY);
