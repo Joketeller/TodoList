@@ -1,4 +1,4 @@
-package utils;
+package Utils;
 
 public class MyDate {
     int Month=0;
@@ -10,10 +10,6 @@ public class MyDate {
 
     public MyDate(){
         super();
-    }
-
-    public MyDate(String str){
-
     }
 
     @Override

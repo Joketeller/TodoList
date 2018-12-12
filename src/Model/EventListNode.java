@@ -1,10 +1,8 @@
 package Model;
 
-import DataType.EventDetail;
+import Utils.EventDetail;
 import javafx.beans.property.*;
 import javafx.beans.property.StringProperty;
-
-import java.time.LocalTime;
 
 //列表视图属于显示的视图，会和View绑定
 public class EventListNode {

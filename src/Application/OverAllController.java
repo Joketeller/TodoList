@@ -1,11 +1,8 @@
 package Application;
 
-import DataType.CategoryInfo;
-import DataType.EventDetail;
+import Utils.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
-import javafx.beans.value.ObservableValue;
-import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
@@ -29,8 +26,10 @@ import java.util.ResourceBundle;
 public class OverAllController implements Initializable {
     @FXML
     ListView<CategoryListNode> CategoryList;
+
     @FXML
     ListView<EventListNode> EventList;
+
     @FXML
     TextArea EventDetail;
 
@@ -247,7 +246,7 @@ public class OverAllController implements Initializable {
                     if (item.getUrgency() == 2) {
                         Cir.setFill(Color.CORAL);
                     } else if (item.getUrgency() == 1) {
-                        Cir.setFill(Color.LIGHTCORAL);
+                        Cir.setFill(Color.LIGHTGREEN);
                     } else if (item.getUrgency() == 0) {
                         Cir.setFill(Color.GREY);
                     }
@@ -265,7 +264,7 @@ public class OverAllController implements Initializable {
                         else
                         {
                             if (newValue.intValue()==1){
-                                Cir.setFill(Color.LIGHTCORAL);
+                                Cir.setFill(Color.LIGHTGREEN);
                             }
                             else
                                 Cir.setFill(Color.GREY);

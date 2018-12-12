@@ -1,6 +1,5 @@
 package Application;
 
-import DataType.CategoryInfo;
 import Model.CategoryListNode;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

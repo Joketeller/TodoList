@@ -2,16 +2,14 @@ package Application;
 import java.io.IOException;
 import java.util.List;
 
-import DataType.CategoryInfo;
-import DataType.EventDetail;
+import Utils.CategoryInfo;
+import Utils.EventDetail;
 import Database.MySQLIO;
 import Model.CategoryListNode;
 import Model.EventListNode;
-import com.mysql.cj.x.protobuf.MysqlxCrud;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
-import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;

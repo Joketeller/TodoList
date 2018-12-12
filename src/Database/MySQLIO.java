@@ -2,8 +2,8 @@ package Database;
 //数据存储层
 //表名不能相同
 //
-import DataType.EventDetail;
-import DataType.CategoryInfo;
+import Utils.EventDetail;
+import Utils.CategoryInfo;
 
 import java.sql.*;
 import java.util.ArrayList;
