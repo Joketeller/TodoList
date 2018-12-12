@@ -9,19 +9,28 @@ public class EventDetail {
     String summary;
     private int id;
     private int urgency=0;
-    String begintime;
-    String endtime;
+    private int startmonth=0;
+    private int startday=0;
+    private int endmonth=0;
+    private int endday=0;
+    private int startyear=0;
+    private int endyear=0;
+
     String RootList;
     //数据库内存为tinyint
     boolean status =false;
-    public EventDetail(int id, String detail, String summary, int urgency,boolean status,String begintime,String endtime) {
+    public EventDetail(int id, String detail, String summary, int urgency,boolean status,int startmonth,int startday,int endmonth,int endday,int startyear,int endyear) {
         this.id = id;
         this.detail = detail;
         this.summary = summary;
         this.urgency = urgency;
         this.status = status;
-        this.begintime=begintime;
-        this.endtime=endtime;
+        this.startmonth=startmonth;
+        this.startday=startday;
+        this.endmonth=endmonth;
+        this.endday=endday;
+        this.startyear=startyear;
+        this.endyear=endyear;
     }
 
     public EventDetail() {
@@ -69,20 +78,36 @@ public class EventDetail {
         this.status = status;
     }
 
-    public String getBegintime() {
-        return begintime;
+    public int getStartmonth() {
+        return startmonth;
     }
 
-    public void setBegintime(String begintime) {
-        this.begintime = begintime;
+    public void setStartmonth(int startmonth) {
+        this.startmonth = startmonth;
     }
 
-    public String getEndtime() {
-        return endtime;
+    public int getEndday() {
+        return endday;
     }
 
-    public void setEndtime(String endtime) {
-        this.endtime = endtime;
+    public void setEndday(int endday) {
+        this.endday = endday;
+    }
+
+    public int getEndmonth() {
+        return endmonth;
+    }
+
+    public void setEndmonth(int endmonth) {
+        this.endmonth = endmonth;
+    }
+
+    public int getStartday() {
+        return startday;
+    }
+
+    public void setStartday(int startday) {
+        this.startday = startday;
     }
 
     public String getRootList() {
@@ -91,6 +116,22 @@ public class EventDetail {
 
     public void setRootList(String rootList) {
         RootList = rootList;
+    }
+
+    public int getEndyear() {
+        return endyear;
+    }
+
+    public void setEndyear(int endyear) {
+        this.endyear = endyear;
+    }
+
+    public int getStartyear() {
+        return startyear;
+    }
+
+    public void setStartyear(int startyear) {
+        this.startyear = startyear;
     }
 }
 

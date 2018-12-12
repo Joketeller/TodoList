@@ -70,8 +70,12 @@ public class MySQLIO {
                                 + "Urgency int(10) NOT NULL,"
                                 + "Summary TINYTEXT NOT NULL,"
                                 + "Detail TEXT NOT NULL,"
-                                + "BeginTime TEXT NOT NULL,"
-                                + "EndTime TEXT NOT NULL,"
+                                + "StartDay int(10) NOT NULL,"
+                                + "StartMonth int(10) NOT NULL,"
+                                + "StartYear int(10) NOT NULL,"
+                                + "EndMonth int(10) NOT NULL,"
+                                + "EndDay int(10) NOT NULL,"
+                                + "EndYear int(10) NOT NULL,"
                                 + "Status TINYINT NOT NULL"
                                 + ")charset=utf8;";
          //   System.out.println("正在创建表...");
@@ -154,7 +158,7 @@ public class MySQLIO {
             ResultSet rs = pstmt.executeQuery();
       //      System.out.println("数据获取成功！");
             while (rs.next()){
-                EventDetail tmp=new EventDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"),rs.getBoolean("Status"),rs.getString("BeginTime"),rs.getString("EndTime"));
+                EventDetail tmp=new EventDetail(rs.getInt("id"),rs.getString("Detail"),rs.getString("Summary"),rs.getInt("Urgency"),rs.getBoolean("Status"),rs.getInt("StartMonth"),rs.getInt("StartDay"),rs.getInt("EndMonth"),rs.getInt("EndDay"),rs.getInt("StartYear"),rs.getInt("EndYear"));
                 tmp.setRootList(TableName);
                 Lists.add(tmp);
             }
@@ -209,8 +213,8 @@ public class MySQLIO {
     public int InsertList(EventDetail Detail, String TableName){
         int result=0;
         PreparedStatement pstmt=null;
-        String sql="INSERT INTO "+TableName+"(Summary,Detail,Urgency,Status,BeginTime,EndTime) "
-                    +"Values ("+"'"+Detail.getSummary()+"','"+Detail.getDetail()+"',"+Detail.getUrgency()+","+Detail.isStatus()+",'"+Detail.getBegintime()+"','"+Detail.getEndtime()+"');";
+        String sql="INSERT INTO "+TableName+"(Summary,Detail,Urgency,Status,StartMonth,StartDay,EndMonth,EndDay,StartYear,EndYear) "
+                    +"Values ("+"'"+Detail.getSummary()+"','"+Detail.getDetail()+"',"+Detail.getUrgency()+","+Detail.isStatus()+","+Detail.getStartmonth()+","+Detail.getStartday()+","+Detail.getEndmonth()+","+Detail.getEndday()+","+Detail.getStartyear()+","+Detail.getEndyear()+");";
         try{
             conn=getConn();
             if (conn==null)
@@ -258,35 +262,35 @@ public class MySQLIO {
     }
 
     //更新数据，可用
-    public int UpdateListInfo(EventDetail Detail, String TableName){
-        String sql="UPDATE "+TableName
-                    +" SET Summary = '"+Detail.getSummary()+"', "
-                    +"Detail = '"+Detail.getDetail()+"',"
-                    +"Status = "+Detail.isStatus()+" , "
-                    +"BeginTime = '"+Detail.getBegintime()+"',"
-                    +"EndTime = '"+Detail.getEndtime()+","
-                    +"Urgency = "+Detail.getUrgency()+" "
-                    +"WHERE id = "+Detail.getId()+" ;";
-        PreparedStatement pstmt=null;
-        int result=0;
-        try {
-            conn = getConn();
-            pstmt = (PreparedStatement) conn.prepareStatement(sql);
-            result = pstmt.executeUpdate();
-   //         System.out.println("更新成功！");
-        }catch (Exception e){
-            System.out.println("更新失败！");
-            e.printStackTrace();
-        }finally {
-            try {
-                conn.close();
-                pstmt.close();
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return result;
-    }
+//    public int UpdateListInfo(EventDetail Detail, String TableName){
+//        String sql="UPDATE "+TableName
+//                    +" SET Summary = '"+Detail.getSummary()+"', "
+//                    +"Detail = '"+Detail.getDetail()+"',"
+//                    +"Status = "+Detail.isStatus()+" , "
+//                    +"BeginTime = '"+Detail.getBegintime()+"',"
+//                    +"EndTime = '"+Detail.getEndtime()+","
+//                    +"Urgency = "+Detail.getUrgency()+" "
+//                    +"WHERE id = "+Detail.getId()+" ;";
+//        PreparedStatement pstmt=null;
+//        int result=0;
+//        try {
+//            conn = getConn();
+//            pstmt = (PreparedStatement) conn.prepareStatement(sql);
+//            result = pstmt.executeUpdate();
+//   //         System.out.println("更新成功！");
+//        }catch (Exception e){
+//            System.out.println("更新失败！");
+//            e.printStackTrace();
+//        }finally {
+//            try {
+//                conn.close();
+//                pstmt.close();
+//            } catch (SQLException e) {
+//                e.printStackTrace();
+//            }
+//        }
+//        return result;
+//    }
 
     //删除表数据，可用
     //不需要后续更新

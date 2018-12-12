@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="309.0" prefWidth="409.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.ConfirmDialogController">
+<AnchorPane prefHeight="309.0" prefWidth="409.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.ConfirmDialogController">
    <children>
       <Label alignment="CENTER" contentDisplay="BOTTOM" layoutX="125.0" layoutY="86.0" prefHeight="69.0" prefWidth="181.0" text="确认删除所选条目？" textAlignment="CENTER" textFill="#282525">
          <font>

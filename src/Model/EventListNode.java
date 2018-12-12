@@ -8,39 +8,23 @@ import javafx.beans.property.StringProperty;
 public class EventListNode {
     private final StringProperty RootListName=new SimpleStringProperty();
     private final StringProperty Name=new SimpleStringProperty();
-    private final StringProperty BeginTime=new SimpleStringProperty();
-    private final StringProperty EndTime=new SimpleStringProperty();
+    private final IntegerProperty StartMonth=new SimpleIntegerProperty();
+    private final IntegerProperty StartDay=new SimpleIntegerProperty();
+    private final IntegerProperty EndMonth=new SimpleIntegerProperty();
+    private final IntegerProperty EndDay=new SimpleIntegerProperty();
     private final BooleanProperty Status=new SimpleBooleanProperty();
     private final IntegerProperty Urgency=new SimpleIntegerProperty();
     private final StringProperty Detail=new SimpleStringProperty();
+    private final IntegerProperty StartYear=new SimpleIntegerProperty();
+    private final IntegerProperty EndYear=new SimpleIntegerProperty();
 
-    public String getEndTime() {
-        return EndTime.get();
-    }
 
     public EventListNode(){
         super();
     }
 
-    public StringProperty endTimeProperty() {
-        return EndTime;
-    }
 
-    public void setEndTime(String endTime) {
-        this.EndTime.set(endTime);
-    }
 
-    public String getBeginTime() {
-        return BeginTime.get();
-    }
-
-    public StringProperty beginTimeProperty() {
-        return BeginTime;
-    }
-
-    public void setBeginTime(String beginTime) {
-        this.BeginTime.set(beginTime);
-    }
 
     public String getName() {
         return Name.get();
@@ -93,11 +77,15 @@ public class EventListNode {
     public EventListNode(EventDetail now){
         this.Status.set(now.isStatus());
         this.Urgency.set(now.getUrgency());
-        this.EndTime.set(now.getEndtime());
-        this.BeginTime.set(now.getBegintime());
+        this.StartMonth.set(now.getStartmonth());
+        this.StartDay.set(now.getStartday());
+        this.EndMonth.set(now.getEndmonth());
+        this.EndDay.set(now.getEndday());
         this.Name.set(now.getSummary());
         this.RootListName.set(now.getRootList());
         this.Detail.set(now.getDetail());
+        this.StartYear.set(now.getStartyear());
+        this.EndYear.set(now.getEndyear());
     }
 
     public String getDetail() {
@@ -112,4 +100,75 @@ public class EventListNode {
         this.Detail.set(detail);
     }
 
+    public int getEndDay() {
+        return EndDay.get();
+    }
+
+    public IntegerProperty endDayProperty() {
+        return EndDay;
+    }
+
+    public void setEndDay(int endDay) {
+        this.EndDay.set(endDay);
+    }
+
+    public int getEndMonth() {
+        return EndMonth.get();
+    }
+
+    public IntegerProperty endMonthProperty() {
+        return EndMonth;
+    }
+
+    public void setEndMonth(int endMonth) {
+        this.EndMonth.set(endMonth);
+    }
+
+    public int getStartDay() {
+        return StartDay.get();
+    }
+
+    public IntegerProperty startDayProperty() {
+        return StartDay;
+    }
+
+    public void setStartDay(int startDay) {
+        this.StartDay.set(startDay);
+    }
+
+    public int getStartMonth() {
+        return StartMonth.get();
+    }
+
+    public IntegerProperty startMonthProperty() {
+        return StartMonth;
+    }
+
+    public void setStartMonth(int startMonth) {
+        this.StartMonth.set(startMonth);
+    }
+
+    public int getEndYear() {
+        return EndYear.get();
+    }
+
+    public IntegerProperty endYearProperty() {
+        return EndYear;
+    }
+
+    public void setEndYear(int endYear) {
+        this.EndYear.set(endYear);
+    }
+
+    public int getStartYear() {
+        return StartYear.get();
+    }
+
+    public IntegerProperty startYearProperty() {
+        return StartYear;
+    }
+
+    public void setStartYear(int startYear) {
+        this.StartYear.set(startYear);
+    }
 }

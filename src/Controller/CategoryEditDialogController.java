@@ -1,4 +1,4 @@
-package Application;
+package Controller;
 
 import Model.CategoryListNode;
 import javafx.fxml.FXML;

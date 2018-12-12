@@ -1,4 +1,4 @@
-package Application;
+package Controller;
 
 import Utils.EventDetail;
 import Model.CategoryListNode;
@@ -230,9 +230,9 @@ public class OverAllController implements Initializable {
                 title.textProperty().bind(item.nameProperty());
                 title.setFont(Font.font("STKaiTi",14));
                 Text BeginTime=new Text();
-                BeginTime.textProperty().bind(item.beginTimeProperty().concat("开始"));
+                BeginTime.textProperty().bind(item.startMonthProperty().asString().concat("月").concat(item.startDayProperty().asString().concat("日开始")));
                 Text EndTime=new Text();
-                EndTime.textProperty().bind(item.endTimeProperty().concat("截止"));
+                EndTime.textProperty().bind(item.endMonthProperty().asString().concat("月").concat(item.endDayProperty().asString().concat("日截止")));
                 BeginTime.setFont(Font.font("STKaiTi",10));
                 EndTime.setFont(Font.font("STKaiTi",10));
                 BeginTime.setFill(Color.BLUE);

@@ -1,17 +1,14 @@
-package Application;
+package Controller;
 
-import Model.CategoryListNode;
 import Model.EventListNode;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
-import javafx.scene.control.MenuButton;
-import javafx.scene.control.MenuItem;
-import javafx.scene.control.TextArea;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.stage.Stage;
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 public class EventEditDialogController implements Initializable {
@@ -32,9 +29,9 @@ public class EventEditDialogController implements Initializable {
     @FXML
     TextField EventName;
     @FXML
-    TextField StartTime;
+    DatePicker StartTime;
     @FXML
-    TextField EndTime;
+    DatePicker EndTime;
     @FXML
     TextArea EventDetail;
     @FXML
@@ -45,6 +42,12 @@ public class EventEditDialogController implements Initializable {
     int urgency=1;
     boolean status=false;
     boolean okclicked=false;
+    int startmonth=0;
+    int startday=0;
+    int endday=0;
+    int endmonth=0;
+    int startyear=0;
+    int endyear=0;
     @Override
     public void initialize(URL location, ResourceBundle resources) {
         //EventUrgency.setText("Fuck");
@@ -87,16 +90,30 @@ public class EventEditDialogController implements Initializable {
     public void setEventInfo(EventListNode pre){
         if (pre==null){
             EventName.setText("");
-            StartTime.setText("现在");
-            EndTime.setText("");
             EventDetail.setText("");
         }
         else
         {
             this.event=pre;
+            this.startyear=pre.getStartYear();
+            this.startmonth=pre.getStartMonth();
+            this.startday=pre.getStartDay();
+            this.endyear=pre.getEndYear();
+            this.endmonth=pre.getEndMonth();
+            this.endday=pre.getEndDay();
             EventName.setText(pre.getName());
-            StartTime.setText(pre.getBeginTime());
-            EndTime.setText(pre.getEndTime());
+            if (startday!=0 && startmonth!=0 && startday!=0){
+                StartTime.setValue(LocalDate.of(startyear,startmonth,startday));
+            }
+            else
+                StartTime.setValue(LocalDate.now());
+            if (endyear!=0 && endmonth!=0 && endday!=0){
+                EndTime.setValue(LocalDate.of(endyear,endmonth,endday));
+            }
+            else
+                EndTime.setValue(LocalDate.now());
+         //   StartTime.setText(pre.getBeginTime());
+         //   EndTime.setText(pre.getEndTime());
             EventDetail.setText(pre.getDetail());
             if (pre.isStatus()){
                 Status.setText("已完成");
@@ -132,14 +149,14 @@ public class EventEditDialogController implements Initializable {
         if (EventName.getText()==null || EventName.getText().length()==0){
             errorMessage+="无效事件名\n";
         }
-        if (StartTime.getText()==null || StartTime.getText().length()==0){
-            errorMessage+="无效开始时间\n";
-        }
-        if (EndTime.getText()==null || EndTime.getText().length()==0){
-            errorMessage+="无效截止时间\n";
+        if (EndTime.getValue().isBefore(StartTime.getValue())){
+            errorMessage+="事件起始时间不合法\n";
         }
         if (urgency==0){
             errorMessage+="无效紧急度\n";
+        }
+        if (EventDetail.getText().length()==0 || EventDetail.getText()==null){
+            errorMessage+="详细信息未填写\n";
         }
         if (errorMessage.length() == 0) {
             return true;
@@ -156,11 +173,18 @@ public class EventEditDialogController implements Initializable {
     private void handleOK(){
         if (isinputvalid()){
             event.setName(EventName.getText());
-            event.setBeginTime(StartTime.getText());
-            event.setEndTime(EndTime.getText());
+      //      event.setBeginTime(StartTime.getText());
+        //    event.setEndTime(EndTime.getText());
             event.setDetail(EventDetail.getText());
             event.setStatus(status);
             event.setUrgency(urgency);
+            event.setStartYear(StartTime.getValue().getYear());
+            event.setStartMonth(StartTime.getValue().getMonthValue());
+            event.setStartDay(StartTime.getValue().getDayOfMonth());
+            event.setEndYear(EndTime.getValue().getYear());
+            event.setEndMonth(EndTime.getValue().getMonthValue());
+            event.setEndDay(EndTime.getValue().getDayOfMonth());
+            System.out.println(StartTime.getValue().getDayOfMonth());
             okclicked=true;
             dialogStage.close();
         }

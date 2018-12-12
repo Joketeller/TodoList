@@ -1,4 +1,4 @@
-package Application;
+package Controller;
 import java.io.IOException;
 import java.util.List;
 
@@ -151,7 +151,7 @@ public class Mainapp extends Application {
             controller.setDialogStage(dialogStage);
             controller.setEventInfo(now);
             dialogStage.showAndWait();
-
+            System.out.println(now.getStartDay());
             return controller.isokclicked();
         } catch (IOException e) {
             e.printStackTrace();
@@ -163,7 +163,7 @@ public class Mainapp extends Application {
     public void AddEvent(EventListNode now,String root){
         for (CategoryInfo tmp:table){
             if (tmp.getName().equals(root)){
-                EventDetail one=new EventDetail(0,now.getDetail(),now.getName(),now.getUrgency(),now.isStatus(),now.getBeginTime(),now.getEndTime());
+                EventDetail one=new EventDetail(0,now.getDetail(),now.getName(),now.getUrgency(),now.isStatus(),now.getStartMonth(),now.getStartDay(),now.getEndMonth(),now.getEndDay(),now.getStartYear(),now.getEndYear());
                 tmp.addevent(one);
                 Link.InsertList(one,root);
             }

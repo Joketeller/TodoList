@@ -5,7 +5,7 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Application.CategoryEditDialogController">
+<AnchorPane prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.CategoryEditDialogController">
     <children>
         <TextField fx:id="CategoryName" layoutX="67.0" layoutY="73.0" AnchorPane.leftAnchor="67.0" />
         <Button layoutX="75.0" layoutY="120.0" mnemonicParsing="false" onAction="#handleOK" text="确认" />
