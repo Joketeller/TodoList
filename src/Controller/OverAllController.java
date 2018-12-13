@@ -21,6 +21,7 @@ import javafx.scene.text.Text;
 
 
 import java.net.URL;
+import java.time.LocalDate;
 import java.util.ResourceBundle;
 
 //主界面
@@ -35,6 +36,9 @@ public class OverAllController implements Initializable {
     TextArea EventDetail;
 
     @FXML
+    Label DeadLine;
+
+    @FXML
     CheckBox FilterTag;
 
     @FXML
@@ -45,6 +49,9 @@ public class OverAllController implements Initializable {
     ObservableList<EventListNode> OrginalEventList=null;
     private Mainapp mainapp=null;
 
+    private int calculate(int ey,int em,int ed){
+        return LocalDate.of(ey,em,ed).compareTo(LocalDate.now());
+    }
     //初始化
     @Override
     public void initialize(URL location, ResourceBundle resources)
@@ -58,6 +65,7 @@ public class OverAllController implements Initializable {
                     if (newValue!=null) {
                      //   System.out.println("selecting " + newValue);
                         ShowEventList(newValue);
+                        DeadLine.setText("");
                         EventDetail.setText("");
                     }
                 })
@@ -66,6 +74,7 @@ public class OverAllController implements Initializable {
                 ((observable, oldValue, newValue) -> {
                     if (newValue != null) {
                         System.out.println("selecting " + newValue);
+                        DeadLine.setText(calculate(newValue.getEndYear(),newValue.getEndMonth(),newValue.getEndDay())+"");
                         EventDetail.setText(newValue.getDetail());
                     }
                 })
@@ -93,6 +102,8 @@ public class OverAllController implements Initializable {
                     
                     System.out.println("单击了条目");
                     if (EventList.getSelectionModel().getSelectedItem()!=null) {
+                        EventListNode newValu=EventList.getSelectionModel().getSelectedItem();
+                        DeadLine.setText(calculate(newValu.getEndYear(),newValu.getEndMonth(),newValu.getEndDay())+"");
                         EventDetail.setText(EventList.getSelectionModel().getSelectedItem().getDetail());
                         System.out.println(EventList.getSelectionModel().getSelectedItem().getName());
                         System.out.println(EventList.getSelectionModel().getSelectedItem().getRootListName());
@@ -131,6 +142,7 @@ public class OverAllController implements Initializable {
                 else if (event.getButton()==MouseButton.PRIMARY  && event.getClickCount() == 1) {
                     System.out.println("单击了条目");
                     //ShowEventDetail(null);
+                    DeadLine.setText("");
                     EventDetail.setText("");
                 } else if (event.getButton()==MouseButton.SECONDARY && event.getClickCount() == 1){
                     boolean ok=mainapp.ShowConfirmPage();
@@ -209,7 +221,8 @@ public class OverAllController implements Initializable {
                             });
                         }
         });
-
+        CategoryList.getSelectionModel().selectFirst();
+        EventList.getSelectionModel().selectFirst();
         SortWay.setTooltip(new Tooltip("选择排序方式"));
     }
 
@@ -225,6 +238,7 @@ public class OverAllController implements Initializable {
         //EventList.getItems().remove();
         OrginalEventList.remove(now);
         //ShowEventDetail(null);
+        DeadLine.setText("");
         EventDetail.setText("");
     }
 
@@ -493,6 +507,7 @@ public class OverAllController implements Initializable {
     private void DeleteCategory(CategoryListNode now,int index){
       //  ShowEventDetail(null);
         ShowEventList(null);
+        DeadLine.setText("");
         EventDetail.setText("");
         mainapp.DeleteCategory(now.getCategoryName());
         CategoryList.getItems().remove(index);

@@ -5,3 +5,40 @@
 .list-cell:empty{
     -fx-background-color: white;
 }
+
+.list-view.scroll-bar{
+    /*-fx-arc-height:2 ;*/
+    /*-fx-fit-to-height: 2;*/
+    /*-fx-fit-to-width: 2;*/
+}
+
+.list-view .scroll-bar:vertical{
+    -fx-background-color: #CDC9C9;
+    -fx-background-radius: 10;
+}
+
+.list-view .scroll-bar:vertical .track{
+    -fx-background-color: transparent;
+}
+
+.list-view .scroll-bar:vertical .thumb{
+    -fx-background-color: #6B6B6B;
+}
+
+.list-view .increment-button{
+    -fx-background-color: transparent;
+}
+
+.list-view .increment-arrow{
+    -fx-background-color: white;
+}
+
+.list-view .decrement-button{
+    -fx-background-color: transparent;
+}
+
+.list-view .decrement-arrow{
+    -fx-background-color: white;
+}
+
+。
