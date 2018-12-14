@@ -50,7 +50,12 @@ public class OverAllController implements Initializable {
     private Mainapp mainapp=null;
 
     private int calculate(int ey,int em,int ed){
-        return LocalDate.of(ey,em,ed).compareTo(LocalDate.now());
+        int tmp=LocalDate.of(ey,em,ed).compareTo(LocalDate.now());
+        if (tmp<0)
+            return 0;
+        else
+            return tmp;
+        //return LocalDate.of(ey,em,ed).compareTo(LocalDate.now());
     }
     //初始化
     @Override

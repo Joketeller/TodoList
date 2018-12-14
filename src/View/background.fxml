@@ -52,7 +52,7 @@
                            </font>
                         </Label>
                         <HBox layoutX="138.0" layoutY="50.0" />
-                        <Label fx:id="DeadLine" alignment="CENTER" contentDisplay="CENTER" layoutX="185.0" layoutY="36.0" prefHeight="86.0" prefWidth="165.0" textAlignment="CENTER" textFill="#3855ba">
+                        <Label fx:id="DeadLine" alignment="CENTER_RIGHT" contentDisplay="CENTER" layoutX="168.0" layoutY="36.0" prefHeight="86.0" prefWidth="165.0" textAlignment="CENTER" textFill="#3855ba">
                            <font>
                               <Font name="STHeiti" size="39.0" />
                            </font>
