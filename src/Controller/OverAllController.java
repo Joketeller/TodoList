@@ -262,7 +262,7 @@ public class OverAllController implements Initializable {
                 //Text numinfo = new Text(item.getTotalEventNum() + " 个任务");  //attention
                 Text numinfo = new Text();
                 numinfo.textProperty().bind(item.totalEventNumProperty().asString().concat("个任务"));
-                numinfo.setFill(Color.BLUE);
+                numinfo.setFill(Color.DARKBLUE);
                 numinfo.setFont(Font.font("STKaiTi",10));
                 cell.setLeft(numinfo);
                 Text unfinished = new Text();
@@ -308,8 +308,8 @@ public class OverAllController implements Initializable {
                 EndTime.textProperty().bind(item.endMonthProperty().asString().concat("月").concat(item.endDayProperty().asString().concat("日截止")));
                 BeginTime.setFont(Font.font("STKaiTi",10));
                 EndTime.setFont(Font.font("STKaiTi",10));
-                BeginTime.setFill(Color.BLUE);
-                EndTime.setFill(Color.BLUE);
+                BeginTime.setFill(Color.DARKBLUE);
+                EndTime.setFill(Color.DARKBLUE);
                 Circle Cir=new Circle(5);
                 if (item.getUrgency()==3)
                 {

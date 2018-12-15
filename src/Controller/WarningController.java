@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.Label;
 import javafx.scene.paint.Color;
+import javafx.scene.text.Font;
 import javafx.stage.Stage;
 
 import java.net.URL;
@@ -32,6 +33,8 @@ public class WarningController implements Initializable {
     public void seterrorinformation(String Name){
         ErrorInformation.setText(Name);
         ErrorInformation.setTextFill(Color.RED);
+        ErrorInformation.setFont(Font.font(15));
+      //  ErrorInformation.setTextFill(Font:15);
     }
 
 }

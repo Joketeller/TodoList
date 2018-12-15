@@ -6,6 +6,7 @@
     -fx-background-color: white;
 }
 
+
 .list-view.scroll-bar{
     /*-fx-arc-height:2 ;*/
     /*-fx-fit-to-height: 2;*/
@@ -14,7 +15,7 @@
 
 .list-view .scroll-bar:vertical{
     -fx-background-color: #CDC9C9;
-    -fx-background-radius: 10;
+    -fx-background-radius: 15;
 }
 
 .list-view .scroll-bar:vertical .track{

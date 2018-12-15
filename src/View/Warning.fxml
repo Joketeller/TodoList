@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WarningController">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.WarningController">
    <children>
-      <Label alignment="CENTER" layoutX="258.0" layoutY="27.0" prefHeight="39.0" prefWidth="85.0" text="错误" textAlignment="CENTER" textFill="#c60505">
+      <Label alignment="CENTER" contentDisplay="CENTER" layoutX="108.0" layoutY="25.0" prefHeight="39.0" prefWidth="85.0" text="错误" textAlignment="CENTER" textFill="#8d4646">
          <font>
-            <Font name="Arial Bold Italic" size="31.0" />
+            <Font size="18.0" />
          </font>
       </Label>
-      <Label fx:id="ErrorInformation" alignment="CENTER" contentDisplay="CENTER" layoutX="132.0" layoutY="85.0" prefHeight="204.0" prefWidth="322.0" textAlignment="CENTER">
+      <Label fx:id="ErrorInformation" alignment="CENTER" contentDisplay="CENTER" layoutX="64.0" layoutY="64.0" prefHeight="67.0" prefWidth="173.0" textAlignment="CENTER">
          <font>
             <Font name="Arial" size="18.0" />
          </font></Label>
-      <Button layoutX="271.0" layoutY="328.0" mnemonicParsing="false" onAction="#handleOK" text="确认" />
+      <Button layoutX="125.0" layoutY="136.0" mnemonicParsing="false" onAction="#handleOK" prefHeight="30.0" prefWidth="51.0" text="确认" />
    </children>
 </AnchorPane>
