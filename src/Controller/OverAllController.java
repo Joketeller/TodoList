@@ -262,7 +262,7 @@ public class OverAllController implements Initializable {
                 //Text numinfo = new Text(item.getTotalEventNum() + " 个任务");  //attention
                 Text numinfo = new Text();
                 numinfo.textProperty().bind(item.totalEventNumProperty().asString().concat("个任务"));
-                numinfo.setFill(Color.DARKBLUE);
+                numinfo.setFill(Color.MIDNIGHTBLUE);
                 numinfo.setFont(Font.font("STKaiTi",10));
                 cell.setLeft(numinfo);
                 Text unfinished = new Text();
@@ -274,6 +274,7 @@ public class OverAllController implements Initializable {
                 pb.setMinHeight(10);
                 pb.setMaxHeight(10);
                 pb.setMaxWidth(10000);
+                pb.setStyle("-fx-accent: midnightblue");
                 pb.setProgress((double)(item.getTotalEventNum()-item.getUnfinishedEventNum())/(double)item.getTotalEventNum());
                 item.unfinishedEventNumProperty().addListener(observable -> {
                     pb.setProgress((double)(item.getTotalEventNum()-item.getUnfinishedEventNum())/(double)item.getTotalEventNum());
@@ -308,19 +309,20 @@ public class OverAllController implements Initializable {
                 EndTime.textProperty().bind(item.endMonthProperty().asString().concat("月").concat(item.endDayProperty().asString().concat("日截止")));
                 BeginTime.setFont(Font.font("STKaiTi",10));
                 EndTime.setFont(Font.font("STKaiTi",10));
-                BeginTime.setFill(Color.DARKBLUE);
-                EndTime.setFill(Color.DARKBLUE);
+                BeginTime.setFill(Color.MIDNIGHTBLUE);
+                EndTime.setFill(Color.MIDNIGHTBLUE);
                 Circle Cir=new Circle(5);
                 if (item.getUrgency()==3)
                 {
-                    Cir.setFill(Color.PURPLE);
+                    Cir.setFill(Color.TOMATO);
                 }
                 else {
                     if (item.getUrgency() == 2) {
-                        Cir.setFill(Color.CORAL);
+                        Cir.setFill(Color.DARKORANGE);
                     } else if (item.getUrgency() == 1) {
-                        Cir.setFill(Color.GREEN);
-                    } else if (item.getUrgency() == 0) {
+                        Cir.setFill(Color.GOLD);
+                    }
+                    else if (item.getUrgency() == 0) {
                         Cir.setFill(Color.GREY);
                     }
                 }
@@ -344,12 +346,12 @@ public class OverAllController implements Initializable {
                         }
                     }
                 }));
-                Text FinishedStatus=new Text("完成情况：已完成");
+                Text FinishedStatus=new Text("已完成");
                 FinishedStatus.setFill(Color.GREY);
                 FinishedStatus.setFont(Font.font("STKaiTi",10));
-                Text UnfinishedStatus=new Text("完成情况：未完成");
+                Text UnfinishedStatus=new Text("未完成");
                 UnfinishedStatus.setFont(Font.font("STKaiTi",10));
-                UnfinishedStatus.setFill(Color.RED);
+                UnfinishedStatus.setFill(Color.LIGHTCORAL);
                 if (item.isStatus()){
                     Cir.setFill(Color.LIGHTGREY);
                     cell.setBottom(FinishedStatus);

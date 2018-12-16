@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.RowConstraints?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="536.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/10.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EventEditDialogController">
+<AnchorPane minWidth="-Infinity" prefHeight="536.0" prefWidth="620.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.EventEditDialogController">
    <children>
       <Label alignment="CENTER" contentDisplay="CENTER" layoutX="247.0" layoutY="14.0" prefHeight="36.0" prefWidth="110.0" text="编辑事件信息" textAlignment="RIGHT">
          <font>

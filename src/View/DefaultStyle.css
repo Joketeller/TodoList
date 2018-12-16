@@ -1,5 +1,6 @@
 .list-cell:selected {
-    -fx-background-color: lightgrey;
+    -fx-background-color: #DCE0E6;
+height:80px;
 }
 
 .list-cell:empty{
@@ -14,7 +15,8 @@
 }
 
 .list-view .scroll-bar:vertical{
-    -fx-background-color: #CDC9C9;
+    //-fx-background-color: #CDC9C9;
+      -fx-background-color: #DCE0E6;
     -fx-background-radius: 15;
 }
 
@@ -23,11 +25,13 @@
 }
 
 .list-view .scroll-bar:vertical .thumb{
-    -fx-background-color: #6B6B6B;
+ //   -fx-background-color: #6B6B6B;
+   -fx-background-color: #DCE0E6;
 }
 
 .list-view .increment-button{
-    -fx-background-color: transparent;
+  -fx-background-color: #DCE0E6;
+   // -fx-background-color: transparent;
 }
 
 .list-view .increment-arrow{
@@ -35,11 +39,21 @@
 }
 
 .list-view .decrement-button{
-    -fx-background-color: transparent;
+  -fx-background-color: #DCE0E6;
+   // -fx-background-color: transparent;
 }
 
 .list-view .decrement-arrow{
     -fx-background-color: white;
 }
 
-。
+.text-area:focused {
+    //-fx-bolder-color: transparent;
+    -fx-background-insets: 0;
+}
+
+.list-view.focused{
+  -fx-background-color: transparent;
+}
+
+
