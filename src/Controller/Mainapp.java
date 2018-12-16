@@ -43,7 +43,7 @@ public class Mainapp extends Application {
     }
 
 
-    //背景窗口 包含菜单栏
+    //背景窗口
     public void initRootLayout() {
         try {
             // Load root layout from fxml file.
@@ -65,7 +65,7 @@ public class Mainapp extends Application {
             loader.setLocation(Mainapp.class.getResource("/View/background.fxml"));
             Parent Background =  loader.load();
             rootLayout.setCenter(Background);
-            OverAllController controller=loader.getController();
+            BackgroundController controller=loader.getController();
             controller.Setmainapp(this);
         } catch (IOException e) {
             e.printStackTrace();
@@ -227,7 +227,7 @@ public class Mainapp extends Application {
         try {
             // Load the fxml file and create a new stage for the popup dialog.
             FXMLLoader loader = new FXMLLoader();
-            loader.setLocation(Mainapp.class.getResource("/View/Warning.fxml"));
+            loader.setLocation(Mainapp.class.getResource("/View/WarningDialog.fxml"));
             AnchorPane page = (AnchorPane) loader.load();
             Stage dialogStage = new Stage();
             dialogStage.setTitle("出错了");
