@@ -306,7 +306,6 @@ public class Mainapp extends Application {
     Clock a=new Clock();
     */
 
-
     public void showTimerPage(MyTimer timer){
         try {
             // Load the fxml file and create a new stage for the popup dialog.
@@ -322,6 +321,30 @@ public class Mainapp extends Application {
             TimerController controller = loader.getController();
             controller.setDialogStage(dialogStage);
             controller.setTimerInfo(timer);
+            //   controller.setcategory(now);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+            //return controller.isokclicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //   return false;
+        }
+    }
+    public void Countdown(MyTimer timer){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/Countdown.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Countdown");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            CountdownController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+           // controller.show(timer);
             //   controller.setcategory(now);
             // Show the dialog and wait until the user closes it
             dialogStage.showAndWait();

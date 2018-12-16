@@ -1,14 +1,19 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import java.lang.*?>
-<?import java.util.*?>
-<?import javafx.scene.*?>
-<?import javafx.scene.control.*?>
-<?import javafx.scene.layout.*?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.GridPane?>
 
-<AnchorPane xmlns="http://javafx.com/javafx"
-            xmlns:fx="http://javafx.com/fxml"
-            fx:controller="Controller.TimerController"
-            prefHeight="400.0" prefWidth="600.0">
+<AnchorPane minHeight="-Infinity" minWidth="-Infinity" prefHeight="200.0" prefWidth="300.0" xmlns="http://javafx.com/javafx/8.0.172-ea" xmlns:fx="http://javafx.com/fxml/1" fx:controller="Controller.TimerController">
+    <Label alignment="CENTER" layoutX="106.0" layoutY="42.0" text="设置完成时间" />
+    <TextField fx:id="Hour" alignment="CENTER" layoutX="65.0" layoutY="78.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="1" />
+    <Label alignment="CENTER" layoutX="175.0" layoutY="83.0" text=":" />
+    <TextField fx:id="Min" alignment="CENTER" layoutX="123.0" layoutY="78.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="1" />
+    <Label alignment="CENTER" layoutX="117.0" layoutY="83.0" text=":" />
+    <TextField fx:id="Sec" alignment="CENTER" layoutX="181.0" layoutY="78.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="30.0" prefWidth="50.0" GridPane.columnIndex="1" />
+   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="86.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleOKTimer" text="确定" />
+   <Button alignment="CENTER" contentDisplay="CENTER" layoutX="165.0" layoutY="130.0" mnemonicParsing="false" onAction="#handleCancelTimer" text="取消" />
 
 </AnchorPane>

@@ -21,6 +21,7 @@ import javafx.animation.Timeline;
 import javafx.scene.layout.Pane;
 import javafx.util.Duration;
 
+import javax.swing.*;
 import java.net.URL;
 import java.util.Calendar;
 import java.util.ResourceBundle;
@@ -30,6 +31,7 @@ import static java.lang.String.valueOf;
 public class TimerController   implements Initializable {
    Stage dialogStage = new Stage();
     Mainapp mainapp=null;
+    MyTimer timer=new MyTimer();
     public void setDialogStage(Stage dialogStage) {
         this.dialogStage = dialogStage;
     }
@@ -46,13 +48,34 @@ public class TimerController   implements Initializable {
     TextField Min;
     @FXML
     TextField Sec;
+
  public void setTimerInfo(MyTimer timer)
  {
-    /* timer.getStartHour(Hour.getText());
-     timer.getStartMin(valueOf(Min.getText()));
-     timer.getStartSec(Sec.getText());*/
-    System.out.println(Hour.getText());
-     System.out.println(Min.getText());
-     System.out.println(Sec.getText());
+
+    //timer.setStartHour(Integer.valueOf(Hour.getText()).intValue());
+   // timer.setStartMin(Integer.parseInt(Min.getText()));
+    //timer.setStartSec(Integer.parseInt(Sec.getText()));
+     dialogStage.close();
  }
+
+
+ @FXML
+ boolean okclicked=false;
+
+ public boolean isokclicked(){
+  return okclicked;
+ }
+
+ @FXML
+ private void handleCancelTimer() {
+  dialogStage.close();
+ }
+
+// @FXML
+@FXML
+private void handleOKTimer(){
+  okclicked=true;
+  dialogStage.close();
+}
+
 }

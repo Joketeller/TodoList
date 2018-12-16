@@ -59,7 +59,7 @@ public class OverAllController implements Initializable {
     private Mainapp mainapp=null;
 
     private int calculate(int ey,int em,int ed){
-        int tmp=LocalDate.of(ey,em,ed).compareTo(LocalDate.now());
+        int  tmp=(int)(LocalDate.of(ey,em,ed).toEpochDay()-LocalDate.now().toEpochDay());
         if (tmp<0)
             return 0;
         else
@@ -528,13 +528,16 @@ public class OverAllController implements Initializable {
         mainapp.DeleteCategory(now.getCategoryName());
         CategoryList.getItems().remove(index);
     }
+    @FXML
     private void setTimer()
     {
-        MyTimer timer=new MyTimer();
-            //界面层修改
-            // CategoryList.getItems().add(now);
-            //  CategoryList.refresh();
-            //数据层修改
-         mainapp.showTimerPage(timer);
+   MyTimer timer=new MyTimer();
+//            //界面层修改
+//            // CategoryList.getItems().add(now);
+//            //  CategoryList.refresh();
+//            //数据层修
+       mainapp.showTimerPage(timer);
+       mainapp.Countdown(timer);
+//        System.out.println("????");
     }
 }

@@ -71,11 +71,11 @@ public class CategoryEditDialogController implements Initializable {
     }
 
     @FXML
-    private void handleOK(){
-        if (isinputvalid()){
-            category.setCategoryName(CategoryName.getText());
-            okclicked=true;
-            dialogStage.close();
+            private void handleOK(){
+                if (isinputvalid()){
+                    category.setCategoryName(CategoryName.getText());
+                    okclicked=true;
+                    dialogStage.close();
         }
     }
 }

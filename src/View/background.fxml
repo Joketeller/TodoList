@@ -45,7 +45,7 @@
                     <content>
                         <AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="439.0" prefWidth="470.0">
                             <children>
-                                <TextArea fx:id="EventDetail" editable="false" layoutY="141.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="322.0" prefWidth="470.0" AnchorPane.bottomAnchor="150.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="120.0" />
+                                <TextArea fx:id="EventDetail" editable="false" layoutY="134.0" maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" prefHeight="315.0" prefWidth="470.0" AnchorPane.bottomAnchor="143.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="134.0" />
                                 <Label layoutX="14.0" layoutY="14.0" prefHeight="30.0" prefWidth="202.0" text="距离截止日期还有">
                                     <font>
                                         <Font name="STHeiti" size="25.0" />
@@ -62,7 +62,11 @@
                                         <Font name="STHeiti" size="39.0" />
                                     </font>
                                 </Label>
-                        <Button layoutX="342.0" layoutY="476.0" mnemonicParsing="false" onAction="#setTimer" text="Button" />
+                                <Label layoutX="64.0" prefHeight="23.0" prefWidth="201.0" text="使用Timer进行工作监督？" AnchorPane.bottomAnchor="60.0" AnchorPane.leftAnchor="64.0">
+                           <font>
+                              <Font size="17.0" />
+                           </font></Label>
+                        <Button layoutX="307.0" layoutY="505.0" mnemonicParsing="false" onAction="#setTimer" prefHeight="30.0" prefWidth="65.0" text="去设置" AnchorPane.bottomAnchor="57.0" />
                             </children>
                         </AnchorPane>
                     </content>
@@ -71,6 +75,7 @@
         </SplitPane>
         <HBox id="HBox" alignment="CENTER_LEFT" spacing="5.0" VBox.vgrow="NEVER">
             <children>
+
                 <Pane prefHeight="-1.0" prefWidth="-1.0" HBox.hgrow="ALWAYS" />
             </children>
             <padding>
