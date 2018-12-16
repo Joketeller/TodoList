@@ -7,6 +7,7 @@ import Utils.EventDetail;
 import Database.MySQLIO;
 import Model.CategoryListNode;
 import Model.EventListNode;
+import Utils.MyTimer;
 import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
@@ -18,8 +19,23 @@ import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.BorderPane;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
-
-
+import javafx.animation.KeyFrame;
+import javafx.animation.Timeline;
+import javafx.scene.control.Label;
+import javafx.scene.layout.Pane;
+import javafx.util.Duration;
+import java.util.*;
+import javafx.application.Application;
+import javafx.event.ActionEvent;
+import javafx.event.EventHandler;
+import javafx.scene.Scene;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Pane;
+import javafx.scene.paint.Color;
+import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
+import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 public class Mainapp extends Application {
     private Stage primaryStage;
@@ -72,7 +88,6 @@ public class Mainapp extends Application {
         }
     }
 
-
     public void setCategory(){
         Categories.clear();
         for (CategoryInfo tmp:table){
@@ -82,9 +97,6 @@ public class Mainapp extends Application {
             Categories.add(new CategoryListNode(tmp.getName(),tmp.getTotalEventNum(),tmp.getUnfinishedEventNum()));
         }
     }
-
-
-
     //to be continued
     public ObservableList<CategoryListNode> getCategory(){
         setCategory();
@@ -267,6 +279,56 @@ public class Mainapp extends Application {
         }catch (IOException e){
             e.printStackTrace();
             return false;
+        }
+    }
+  /*timer
+    public class Clock extends Pane {
+
+        private Timeline animation;
+        private String S = "";
+        private int tmp = 300;
+        Label label = new Label("300");
+        public Clock() {
+            label.setFont(javafx.scene.text.Font.font(20));
+            getChildren().add(label);
+            animation = new Timeline(new KeyFrame(Duration.millis(1000), e -> timelabel()));
+            animation.setCycleCount(Timeline.INDEFINITE);
+            animation.play();
+        }
+
+        public void timelabel() {
+            tmp--;
+            S = tmp + "";
+            label.setText(S);
+        }
+
+    }
+    Clock a=new Clock();
+    */
+
+
+    public void showTimerPage(MyTimer timer){
+        try {
+            // Load the fxml file and create a new stage for the popup dialog.
+            FXMLLoader loader = new FXMLLoader();
+            loader.setLocation(Mainapp.class.getResource("/View/Timer.fxml"));
+            AnchorPane page = (AnchorPane) loader.load();
+            Stage dialogStage = new Stage();
+            dialogStage.setTitle("Timer");
+            dialogStage.initModality(Modality.WINDOW_MODAL);
+            dialogStage.initOwner(primaryStage);
+            Scene scene = new Scene(page);
+            dialogStage.setScene(scene);
+            TimerController controller = loader.getController();
+            controller.setDialogStage(dialogStage);
+            controller.setTimerInfo(timer);
+            //   controller.setcategory(now);
+            // Show the dialog and wait until the user closes it
+            dialogStage.showAndWait();
+            //return controller.isokclicked();
+        } catch (IOException e) {
+            e.printStackTrace();
+            //   return false;
         }
     }
 }

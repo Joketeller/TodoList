@@ -3,26 +3,35 @@ package Controller;
 import Utils.EventDetail;
 import Model.CategoryListNode;
 import Model.EventListNode;
+import Utils.MyTimer;
+import javafx.application.Application;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import javafx.collections.transformation.SortedList;
+import javafx.event.ActionEvent;
 import javafx.event.EventHandler;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseButton;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.BorderPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.Line;
 import javafx.scene.text.Font;
 import javafx.scene.text.Text;
+import javafx.stage.Stage;
 
 
 import java.net.URL;
 import java.time.LocalDate;
+import java.util.Calendar;
 import java.util.ResourceBundle;
+import java.util.Timer;
 
 //主界面
 public class OverAllController implements Initializable {
@@ -519,5 +528,13 @@ public class OverAllController implements Initializable {
         mainapp.DeleteCategory(now.getCategoryName());
         CategoryList.getItems().remove(index);
     }
-
+    private void setTimer()
+    {
+        MyTimer timer=new MyTimer();
+            //界面层修改
+            // CategoryList.getItems().add(now);
+            //  CategoryList.refresh();
+            //数据层修改
+         mainapp.showTimerPage(timer);
+    }
 }

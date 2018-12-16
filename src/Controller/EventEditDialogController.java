@@ -165,8 +165,6 @@ public class EventEditDialogController implements Initializable {
             mainapp.ShowErrorPage(errorMessage);
             return false;
         }
-
-
     }
 
     @FXML
